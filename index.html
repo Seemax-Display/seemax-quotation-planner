@@ -295,13 +295,71 @@
       .main{padding:14px}.topbar h1{font-size:23px}.field,.field.third,.field.quarter{grid-column:span 12}.mini-metrics{grid-template-columns:1fr}.cards-grid{grid-template-columns:1fr}.product-metrics{grid-template-columns:1fr}.summary-paper{padding:16px}.summary-head{flex-direction:column}.big-number{font-size:26px}
     }
 
+
+    /* TUTORIAL GUIDATO */
+    .quick-status-card h2{margin-bottom:10px}
+    .tutorial-side-actions{margin:10px 0 14px 0;display:flex;flex-direction:column;gap:7px}
+    .tutorial-side-actions .btn{width:100%}
+    .tutorial-launch{
+      display:flex!important;visibility:visible!important;opacity:1!important;
+      background:linear-gradient(135deg,#facc15,#ffffff 48%,#dbeafe);
+      color:#081a31;border:2px solid rgba(250,204,21,.95);
+      box-shadow:0 16px 34px rgba(250,204,21,.24),0 10px 24px rgba(0,0,0,.18);
+      text-transform:uppercase;letter-spacing:.08em;font-size:13px;min-height:48px;
+    }
+    .tutorial-launch:hover{background:linear-gradient(135deg,#fde047,#ffffff 52%,#bfdbfe)}
+    .tutorial-hint{display:block;color:rgba(255,255,255,.78);font-size:11px;line-height:1.35;text-align:center}
+    .tutorial-mobile-launch{
+      display:none;
+      position:fixed!important;
+      right:calc(14px + env(safe-area-inset-right, 0px));
+      bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+      z-index:2147483647!important;
+      border-radius:999px;
+      box-shadow:0 16px 34px rgba(15,23,42,.28);
+      min-height:52px;
+      padding:13px 17px;
+      align-items:center;
+      justify-content:center;
+      pointer-events:auto!important;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .tutorial-layer.hidden{display:none}
+    .tutorial-dim{position:fixed;inset:0;background:rgba(8,26,49,.62);z-index:9000;backdrop-filter:blur(2px)}
+    .tutorial-highlight{
+      position:fixed;z-index:9001;border:3px solid #fff;border-radius:18px;pointer-events:none;
+      box-shadow:0 0 0 9999px rgba(8,26,49,.34),0 16px 42px rgba(0,0,0,.35),0 0 0 6px rgba(37,99,235,.34);
+      transition:left .18s ease,top .18s ease,width .18s ease,height .18s ease
+    }
+    .tutorial-popover{
+      position:fixed;z-index:9002;width:min(360px,calc(100vw - 28px));background:#fff;color:var(--ink);
+      border-radius:20px;border:1px solid rgba(226,232,240,.95);box-shadow:0 24px 70px rgba(0,0,0,.32);padding:16px
+    }
+    .tutorial-popover .tut-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--brand);font-weight:950;margin-bottom:6px}
+    .tutorial-popover h3{font-size:17px;margin:0 0 7px 0;line-height:1.2;color:#081a31}
+    .tutorial-popover p{font-size:13px;line-height:1.55;color:var(--muted);margin:0 0 14px 0}
+    .tutorial-progress{height:6px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin:10px 0 14px}
+    .tutorial-progress span{display:block;height:100%;background:var(--brand-2);border-radius:999px;transition:width .18s ease}
+    .tutorial-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .tutorial-actions .btn{padding:9px 12px;border-radius:12px;font-size:12px}
+    .tutorial-end-options{display:grid;gap:8px;margin-top:10px}
+    .tutorial-end-options .btn{width:100%}
+    @media (max-width:1120px), (hover:none), (pointer:coarse){
+      .tutorial-mobile-launch{
+        display:inline-flex!important;
+        visibility:visible!important;
+        opacity:1!important;
+      }
+    }
+
     @media print{
-      body{background:#fff}.sidebar,.mobile-tabs,.topbar,.actions,.no-print,.nav,.status-pills{display:none!important}.app{display:block}.main{padding:0}.view{display:none!important}#view-summary{display:block!important}.summary-paper{box-shadow:none;border:none;border-radius:0;max-width:none;padding:0}.summary-box,.total-box{break-inside:avoid}.summary-grid{grid-template-columns:1fr 1fr}.total-box{grid-template-columns:repeat(3,1fr)}
+      body{background:#fff}.sidebar,.mobile-tabs,.topbar,.actions,.no-print,.nav,.status-pills,.tutorial-layer,.tutorial-mobile-launch{display:none!important}.app{display:block}.main{padding:0}.view{display:none!important}#view-summary{display:block!important}.summary-paper{box-shadow:none;border:none;border-radius:0;max-width:none;padding:0}.summary-box,.total-box{break-inside:avoid}.summary-grid{grid-template-columns:1fr 1fr}.total-box{grid-template-columns:repeat(3,1fr)}
     }
   </style>
 </head>
 <body>
   <div class="mobile-tabs no-print" id="mobileTabs"></div>
+  <button class="btn primary tutorial-mobile-launch no-print" type="button" id="btnTutorialMobile">🎓 Tutorial</button>
   <div class="app">
     <aside class="sidebar no-print">
       <div class="brand">
@@ -316,8 +374,12 @@
         <p>Compila anagrafica, configura il Ledwall, seleziona o importa l'importo del noleggio operativo e genera il riepilogo stampabile.</p>
       </div>
       <nav class="nav" id="sideNav" aria-label="Navigazione principale"></nav>
-      <div class="side-card">
+      <div class="side-card quick-status-card">
         <h2>Ri-epilogo Rapido</h2>
+        <div class="tutorial-side-actions" id="tutorialButtonSlot">
+          <button class="btn tutorial-launch" type="button" id="btnTutorial" aria-label="Avvia tutorial guidato">🎓 AVVIA TUTORIAL GUIDATO</button>
+          <small class="tutorial-hint">Guida passo-passo l’utente nella scheda in cui si trova.</small>
+        </div>
         <div class="side-mini-grid">
           <div class="side-mini"><span>Modalità</span><strong id="sideMode">Admin</strong></div>
           <div class="side-mini"><span>Ledwall</span><strong id="sideLedStatus">—</strong></div>
@@ -514,6 +576,13 @@
     </main>
   </div>
 
+
+  <div class="tutorial-layer hidden no-print" id="tutorialLayer" aria-live="polite">
+    <div class="tutorial-dim"></div>
+    <div class="tutorial-highlight" id="tutorialHighlight"></div>
+    <div class="tutorial-popover" id="tutorialPopover" role="dialog" aria-modal="true" aria-label="Tutorial guidato"></div>
+  </div>
+
   <script>
     // =============================
     // CONFIGURAZIONE GENERALE
@@ -647,10 +716,10 @@
     };
 
     const views = [
-      {id:'anagrafica', icon:'👤', title:'Dati', subtitle:'Agente e cliente'},
-      {id:'ledwall', icon:'🖥️', title:'Ledwall', subtitle:'Configurazione impianto'},
-      {id:'grenke', icon:'💶', title:'Grenke', subtitle:'Noleggio operativo'},
-      {id:'summary', icon:'🧾', title:'Riepilogo', subtitle:'Ordine e stampa'}
+      {id:'anagrafica', icon:'👤', title:'DATI', subtitle:'Agente e cliente'},
+      {id:'ledwall', icon:'🖥️', title:'LEDWALL', subtitle:'Configurazione impianto'},
+      {id:'grenke', icon:'💶', title:'GRENKE', subtitle:'Noleggio operativo'},
+      {id:'summary', icon:'🧾', title:'RIEPILOGO', subtitle:'Ordine e stampa'}
     ];
 
     const $ = (id) => document.getElementById(id);
@@ -1126,8 +1195,258 @@
       updateSideStatus();
     }
 
+    // =============================
+    // TUTORIAL GUIDATO
+    // =============================
+    const tutorialState = {
+      active:false,
+      view:null,
+      step:0,
+      endScreen:false
+    };
+
+    const TUTORIAL_STEPS = {
+      anagrafica:[
+        {selector:'#agentName', title:'NOME AGENTE', text:'Compila questo campo con il tuo nome. Verrà riportato automaticamente nel riepilogo finale.'},
+        {selector:'#agentCompany', title:'AZIENDA / BRAND', text:'Questo campo è bloccato su LED LAB COMPANY - SEEMAX DISPLAY, e non può essere modificato. Questa informazione verrà riportata nel riepilogo finale.'},
+        {selector:'#agentEmail', title:'EMAIL AGENTE', text:'Inserisci la tua email: sarà utile al cliente e comparirà nella stampa del riepilogo.'},
+        {selector:'#agentPhone', title:'TELEFONO AGENTE', text:'Inserisci il tuo recapito telefonico diretto per eventuali chiarimenti sul preventivo.'},
+        {selector:'#clientCompany', title:'AZIENDA CLIENTE', text:'Scrivi la ragione sociale o il nome commerciale del cliente.'},
+        {selector:'#clientVat', title:'PARTITA IVA / CODICE FISCALE', text:'Campo opzionale ma consigliato per poter eseguire un analisi creditizia e capire se il cliente è affidabile o meno.'},
+        {selector:'#clientName', title:'REFERENTE CLIENTE', text:'Inserisci il nome della persona con cui stai gestendo la trattativa.'},
+        {selector:'#clientEmail', title:'EMAIL CLIENTE', text:'Inserisci l’indirizzo email del cliente, utile per inviare il PDF generato.'},
+        {selector:'#clientPhone', title:'TELEFONO CLIENTE', text:'Aggiungi il numero di cellulare/telefono del cliente, se disponibile.'},
+        {selector:'#clientCity', title:'COMUNE / LOCALITÀ', text:'Indica il luogo di installazione o la località principale del progetto.'},
+        {selector:'#projectNotes', title:'NOTE COMMERCIALI / OPERATIVE', text:'Usa questo spazio per annotare esigenze del cliente, vincoli tecnici, scadenze o dettagli utili alla squadra operativa.'}
+      ],
+      ledwall:[
+        {selector:'#ledBase', title:'BASE (cm)', text:'Inserisci la base desiderata in centimetri. Il calcolatore confronterà la misura con i cabinet disponibili.'},
+        {selector:'#ledHeight', title:'ALTEZZA (cm)', text:'Inserisci l’altezza desiderata in centimetri. Le soluzioni compatibili appariranno a destra.'},
+        {selector:'#ledBif', title:'CONFIGURAZIONE BIFACCIALE', text:'Attiva questa opzione se devi realizzare un Ledwall Bifacciale. Il calcolatore applicherà la logica per mostrarti i valori rielaborati.'},
+        {selector:'#ledInstall', title:'TIPO DI INSTALLAZIONE', text:'Seleziona la modalità di installazione. Il relativo costo viene aggiunto automaticamente al totale Ledwall.'},
+        {selector:'#ledProvince', title:'PROVINCIA INSTALLAZIONE', text:'Scegli la provincia. Se è prevista trasferta, il costo viene calcolato automaticamente.'},
+        {selector:'#ledCommission', title:'PROVVIGIONE', text:'Inserisci qui il tuo valore provvigionale. Il valore viene caricato direttamente sul totale Ledwall e mostrato nella card. Potrai successivamente nasconderlo dalla Stampa.'},
+        {selector:'#ledResults', title:'RISULTATI', text:'Qui trovi le soluzioni generate. Se esistono misure perfette, il sistema mostra prima solo quelle compatibili. Prova diverse soluzioni e trova il prodotto più adatto alle tue esigenze.'},
+        {selector:'#btnLedToGrenke', title:'USA IMPORTO PER GRENKE', text:'Dopo aver selezionato un prodotto, questo pulsante trasferisce l’importo direttamente nel calcolatore Grenke. Puoi anche trasferire l’importo direttamente dal Ledwall in evidenza.'}
+      ],
+      grenke:[
+        {selector:'#grenkeAmount', title:'IMPORTO NOLEGGIO', text:'Qui puoi inserire un importo manualmente oppure usare quello importato da un Ledwall.'},
+        {selector:'#btnGrenkeCalc', title:'CALCOLA GRENKE', text:'Clicca questo pulsante per calcolare il canone in base a importo, frequenza e durata. Verranno calcolati inoltre Canone Assicurativo Annuale e il Valore di Riscatto.'},
+        {selector:'#modeMonthly', title:'FREQUENZA MENSILE', text:'Seleziona il pulsante Mensile per visualizzare il canone netto mensile.'},
+        {selector:'#modeQuarterly', title:'FREQUENZA TRIMESTRALE', text:'Seleziona il pulsante trimestrale per calcolare la mensilità equivalente con fatturazione trimestrale.'},
+        {selector:'.durata-list', title:'DURATA', text:'Scegli la durata desiderata. Il canone principale si aggiorna sulla durata selezionata e verrà evidenziato come canone principale nella fase di stampa.'},
+        {selector:'#mainCanone', title:'CANONE PRINCIPALE', text:'Questo è il canone netto calcolato per il cliente, in base alle condizioni impostate.'}
+      ],
+      summary:[
+        {selector:'.summary-options', title:'OPZIONI DI STAMPA', text:'Scegli se mostrare o nascondere nella stampa i valori di installazione, trasferta e provvigione.'},
+        {selector:'#summaryPaper', title:'RIEPILOGO ORDINE', text:'Questa è l’anteprima completa del documento stampabile con dati cliente, Ledwall, Grenke e informazioni aziendali.'},
+        {selector:'#btnPrint', title:'STAMPA / SALVA PDF', text:'Quando ti ritieni soddisfatto del preventivo, clicca qui per stampare o salvare il documento in PDF dal browser.'}
+      ]
+    };
+
+    function isRealMobileViewport(){
+      const ua = navigator.userAgent || '';
+      const coarse = window.matchMedia && (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches);
+      return window.innerWidth <= 1120 || coarse || /Android|iPhone|iPad|iPod|Mobile|Mobi/i.test(ua);
+    }
+
+    function ensureTutorialButtonVisible(){
+      const statusCard = document.querySelector('.quick-status-card');
+      if(statusCard && !$('btnTutorial')){
+        const slot = document.createElement('div');
+        slot.className = 'tutorial-side-actions';
+        slot.id = 'tutorialButtonSlot';
+        slot.innerHTML = '<button class="btn tutorial-launch" type="button" id="btnTutorial" aria-label="Avvia tutorial guidato">🎓 AVVIA TUTORIAL GUIDATO</button><small class="tutorial-hint">Guida passo-passo l’utente nella scheda in cui si trova.</small>';
+        const title = statusCard.querySelector('h2');
+        if(title) title.insertAdjacentElement('afterend', slot);
+        else statusCard.insertBefore(slot, statusCard.firstChild);
+      }
+      const btn = $('btnTutorial');
+      if(btn){
+        btn.style.display = 'flex';
+        btn.style.visibility = 'visible';
+        btn.style.opacity = '1';
+        btn.style.width = '100%';
+      }
+
+      let mobileBtn = $('btnTutorialMobile');
+      if(!mobileBtn){
+        mobileBtn = document.createElement('button');
+        mobileBtn.className = 'btn primary tutorial-mobile-launch no-print';
+        mobileBtn.type = 'button';
+        mobileBtn.id = 'btnTutorialMobile';
+        mobileBtn.textContent = '🎓 Tutorial';
+        document.body.appendChild(mobileBtn);
+      }
+      if(mobileBtn){
+        const showMobile = isRealMobileViewport();
+        mobileBtn.style.display = showMobile ? 'inline-flex' : 'none';
+        mobileBtn.style.visibility = showMobile ? 'visible' : 'hidden';
+        mobileBtn.style.opacity = showMobile ? '1' : '0';
+        mobileBtn.style.position = 'fixed';
+        mobileBtn.style.zIndex = '2147483647';
+        mobileBtn.style.right = 'calc(14px + env(safe-area-inset-right, 0px))';
+        mobileBtn.style.bottom = 'calc(18px + env(safe-area-inset-bottom, 0px))';
+        mobileBtn.style.pointerEvents = 'auto';
+        mobileBtn.style.minHeight = '52px';
+      }
+    }
+
+    function setupTutorial(){
+      ensureTutorialButtonVisible();
+      const startButtons = Array.from(new Set([$('btnTutorial'), $('btnTutorialMobile'), ...document.querySelectorAll('[data-start-tutorial]')].filter(Boolean)));
+      startButtons.forEach(btn => btn.addEventListener('click', () => startTutorial(state.view)));
+      window.addEventListener('resize', () => { ensureTutorialButtonVisible(); if(tutorialState.active) positionTutorial(); });
+      window.addEventListener('orientationchange', () => setTimeout(() => { ensureTutorialButtonVisible(); if(tutorialState.active) positionTutorial(); }, 250));
+      if(window.visualViewport){
+        window.visualViewport.addEventListener('resize', () => { ensureTutorialButtonVisible(); if(tutorialState.active) positionTutorial(); });
+      }
+      window.addEventListener('scroll', () => { if(tutorialState.active) positionTutorial(); }, {passive:true});
+      document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && tutorialState.active) endTutorial(); });
+    }
+
+    function startTutorial(viewId){
+      tutorialState.active = true;
+      tutorialState.view = viewId || state.view;
+      tutorialState.step = 0;
+      tutorialState.endScreen = false;
+      setView(tutorialState.view);
+      setTimeout(showTutorialStep, 260);
+    }
+
+    function endTutorial(){
+      tutorialState.active = false;
+      tutorialState.endScreen = false;
+      const layer = $('tutorialLayer');
+      if(layer) layer.classList.add('hidden');
+    }
+
+    function currentTutorialSteps(){
+      return TUTORIAL_STEPS[tutorialState.view] || [];
+    }
+
+    function findTutorialTarget(step){
+      if(!step) return null;
+      const nodes = Array.from(document.querySelectorAll(step.selector));
+      return nodes.find(node => node.offsetParent !== null || node.getClientRects().length > 0) || nodes[0] || null;
+    }
+
+    function showTutorialStep(){
+      const steps = currentTutorialSteps();
+      if(!steps.length){ showTutorialEnd(); return; }
+      if(tutorialState.step >= steps.length){ showTutorialEnd(); return; }
+      if(tutorialState.step < 0) tutorialState.step = 0;
+      tutorialState.endScreen = false;
+      const step = steps[tutorialState.step];
+      const target = findTutorialTarget(step);
+      const layer = $('tutorialLayer');
+      if(!layer || !target){ tutorialState.step++; showTutorialStep(); return; }
+      layer.classList.remove('hidden');
+      target.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'});
+      setTimeout(() => {
+        positionTutorial(target);
+        renderTutorialPopover(step, false);
+      }, 260);
+    }
+
+    function showTutorialEnd(){
+      tutorialState.endScreen = true;
+      const layer = $('tutorialLayer');
+      const highlight = $('tutorialHighlight');
+      const pop = $('tutorialPopover');
+      if(!layer || !highlight || !pop) return;
+      layer.classList.remove('hidden');
+      const activeView = document.querySelector('#view-' + tutorialState.view);
+      const rect = (activeView || document.body).getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const hTop = Math.max(74, Math.min(vh - 180, rect.top + 30));
+      highlight.style.left = Math.max(14, Math.min(vw - 260, rect.left + 24)) + 'px';
+      highlight.style.top = hTop + 'px';
+      highlight.style.width = Math.min(vw - 28, Math.max(260, Math.min(rect.width - 48, 620))) + 'px';
+      highlight.style.height = '120px';
+      renderTutorialPopover(null, true);
+      const pRect = pop.getBoundingClientRect();
+      pop.style.left = Math.max(14, Math.min(vw - pRect.width - 14, (vw - pRect.width) / 2)) + 'px';
+      pop.style.top = Math.max(14, Math.min(vh - pRect.height - 14, hTop + 150)) + 'px';
+    }
+
+    function positionTutorial(target){
+      if(!tutorialState.active) return;
+      if(tutorialState.endScreen){ showTutorialEnd(); return; }
+      const step = currentTutorialSteps()[tutorialState.step];
+      const el = target || findTutorialTarget(step);
+      const highlight = $('tutorialHighlight');
+      const pop = $('tutorialPopover');
+      if(!el || !highlight || !pop) return;
+      const rect = el.getBoundingClientRect();
+      const pad = 8;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      highlight.style.left = Math.max(8, rect.left - pad) + 'px';
+      highlight.style.top = Math.max(8, rect.top - pad) + 'px';
+      highlight.style.width = Math.min(vw - 16, rect.width + pad * 2) + 'px';
+      highlight.style.height = Math.min(vh - 16, rect.height + pad * 2) + 'px';
+      const popWidth = Math.min(360, vw - 28);
+      pop.style.width = popWidth + 'px';
+      let left = rect.left;
+      if(left + popWidth > vw - 14) left = vw - popWidth - 14;
+      left = Math.max(14, left);
+      let top = rect.bottom + 18;
+      const estimatedHeight = pop.offsetHeight || 220;
+      if(top + estimatedHeight > vh - 14) top = rect.top - estimatedHeight - 18;
+      if(top < 14) top = 14;
+      pop.style.left = left + 'px';
+      pop.style.top = top + 'px';
+    }
+
+    function renderTutorialPopover(step, endScreen){
+      const pop = $('tutorialPopover');
+      if(!pop) return;
+      const viewIndex = views.findIndex(v => v.id === tutorialState.view);
+      const view = views[viewIndex] || views[0];
+      const steps = currentTutorialSteps();
+      if(endScreen){
+        const hasPrev = viewIndex > 0;
+        const hasNext = viewIndex < views.length - 1;
+        pop.innerHTML = `
+          <div class="tut-kicker">Tutorial · ${safe(view.title)}</div>
+          <h3>Scheda completata</h3>
+          <p>Hai completato il tutorial di questa scheda. Puoi passare alla scheda successiva, tornare a quella precedente o terminare il tutorial.</p>
+          <div class="tutorial-end-options">
+            ${hasPrev ? `<button class="btn ghost" type="button" id="tutPrevView">Tutorial: scheda precedente</button>` : ''}
+            ${hasNext ? `<button class="btn primary" type="button" id="tutNextView">Tutorial: scheda successiva</button>` : ''}
+            <button class="btn dark" type="button" id="tutEnd">Termina tutorial</button>
+          </div>`;
+        const prev = $('tutPrevView');
+        const next = $('tutNextView');
+        const end = $('tutEnd');
+        if(prev) prev.addEventListener('click', () => startTutorial(views[viewIndex - 1].id));
+        if(next) next.addEventListener('click', () => startTutorial(views[viewIndex + 1].id));
+        if(end) end.addEventListener('click', endTutorial);
+        return;
+      }
+      const pct = Math.max(0, Math.min(100, ((tutorialState.step + 1) / Math.max(steps.length, 1)) * 100));
+      pop.innerHTML = `
+        <div class="tut-kicker">Tutorial · ${safe(view.title)} · Passo ${tutorialState.step + 1} di ${steps.length}</div>
+        <h3>${safe(step.title)}</h3>
+        <p>${safe(step.text)}</p>
+        <div class="tutorial-progress"><span style="width:${pct}%"></span></div>
+        <div class="tutorial-actions">
+          <button class="btn ghost" type="button" id="tutBack" ${tutorialState.step === 0 ? 'disabled' : ''}>Indietro</button>
+          <button class="btn dark" type="button" id="tutStop">Termina</button>
+          <button class="btn primary" type="button" id="tutNext">Avanti</button>
+        </div>`;
+      $('tutBack').addEventListener('click', () => { tutorialState.step--; showTutorialStep(); });
+      $('tutStop').addEventListener('click', endTutorial);
+      $('tutNext').addEventListener('click', () => { tutorialState.step++; showTutorialStep(); });
+    }
+
+
+
     function boot(){
       initNavigation();
+      setupTutorial();
       setupDataInputs();
       setupLedwall();
       setupGrenke();
