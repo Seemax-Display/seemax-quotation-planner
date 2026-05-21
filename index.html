@@ -237,6 +237,43 @@
     .mod{border-radius:4px;border:1px solid #93c5fd;background:#dbeafe;flex:0 0 auto}
     .mod.square{background:#d1fae5;border-color:#86efac}.mod.rect{background:#bfdbfe;border-color:#60a5fa}.mod.bif{background:#fecaca;border-color:#fca5a5}
 
+    .quote-manager{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#ffffff,#f8fbff);
+      border-radius:16px;
+      padding:12px;
+      margin:0 0 14px 0;
+      display:grid;
+      gap:10px;
+    }
+    .quote-manager-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .quote-tabs{display:flex;flex-wrap:wrap;gap:8px}
+    .quote-tab{
+      border:1px solid var(--line-strong);
+      background:#fff;
+      color:var(--ink);
+      border-radius:999px;
+      padding:8px 11px;
+      font-size:12px;
+      font-weight:950;
+      display:inline-flex;
+      gap:7px;
+      align-items:center;
+    }
+    .quote-tab.active{background:var(--brand-2);border-color:var(--brand-2);color:#fff;box-shadow:0 10px 18px rgba(37,99,235,.18)}
+    .quote-tab .q-status{width:8px;height:8px;border-radius:999px;background:var(--muted-2)}
+    .quote-tab.active .q-status{background:#fff}
+    .quote-tab.is-ready .q-status{background:var(--success)}
+    .quote-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .quote-actions .btn{padding:9px 11px;border-radius:12px;font-size:12px}
+    .manual-install-field{display:none}
+    .manual-install-field.is-visible{display:flex}
+    .autonoma-warning{border:1px solid #fecaca;background:#fff1f2;color:#991b1b;border-radius:14px;padding:10px 11px;font-size:12px;line-height:1.45;margin:8px 0 10px}
+    .pm small{display:block;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.35;font-weight:750}
+    .summary-led-block{border:1px solid var(--line);border-radius:14px;padding:12px;margin:0 0 12px;background:#fff}
+    .summary-led-block:last-child{margin-bottom:0}
+    .summary-led-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 8px;font-weight:950;color:var(--brand-3);font-size:13px;text-transform:uppercase;letter-spacing:.10em}
+    .summary-led-title span:last-child{font-size:12px;color:var(--muted);letter-spacing:0;text-transform:none}
     .grenke-shell{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
     .grenke-panel{background:linear-gradient(180deg,#0a3570,#081a31);color:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
     .grenke-panel .gp-head{background:rgba(255,255,255,.10);padding:16px 18px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
@@ -440,6 +477,20 @@
                 <p>Le soluzioni si aggiornano in tempo reale in base a misure, installazione, provincia e configurazione mono-bifacciale.</p>
               </div>
             </div>
+            <div class="quote-manager" aria-label="Gestione Ledwall multipli">
+              <div class="quote-manager-top">
+                <div>
+                  <div class="label">Ledwall da quotare</div>
+                  <div class="help">Puoi configurare fino a 3 Ledwall nello stesso riepilogo.</div>
+                </div>
+                <div class="quote-actions">
+                  <button class="btn soft" type="button" id="btnAddLedQuote">+ Aggiungi Ledwall</button>
+                  <button class="btn ghost" type="button" id="btnRemoveLedQuote">Rimuovi</button>
+                </div>
+              </div>
+              <div class="quote-tabs" id="ledQuoteTabs"></div>
+              <div class="help" id="ledQuoteHelp">Il primo Ledwall applica il 100% dell’installazione; il secondo aggiunge il 50%; il terzo aggiunge il 30%.</div>
+            </div>
             <div class="form-grid">
               <div class="field"><label class="label" for="ledBase">Base (cm)</label><input id="ledBase" type="number" min="0" step="1" placeholder="Es. 200" /></div>
               <div class="field"><label class="label" for="ledHeight">Altezza (cm)</label><input id="ledHeight" type="number" min="0" step="1" placeholder="Es. 150" /></div>
@@ -450,12 +501,13 @@
                   <span><strong>Configurazione fronte/retro</strong><br/><span class="help">Raddoppia i cabinet e i valori del display.</span></span>
                 </label>
               </div>
-              <div class="field full"><label class="label" for="ledInstall">Installazione</label><select id="ledInstall"><option value="personalizza">Da personalizzare</option><option value="parete">A parete</option><option value="bandiera">A bandiera</option><option value="palo">Su palo</option><option value="vetrina">A vetrina</option></select></div>
+              <div class="field full"><label class="label" for="ledInstall">Installazione</label><select id="ledInstall"><option value="personalizza">Da personalizzare</option><option value="autonoma">Autonoma</option><option value="parete">A parete</option><option value="bandiera">A bandiera</option><option value="palo">Su palo</option><option value="vetrina">A vetrina</option></select><div class="help">Scegli “Autonoma” solo quando vuoi inserire manualmente il costo installazione.</div></div>
+              <div class="field full manual-install-field" id="ledInstallCustomField"><label class="label" for="ledInstallCustom">Costo installazione autonoma</label><input id="ledInstallCustom" type="number" min="0" step="1" value="0" placeholder="Es. 800" /><div class="help">Valore libero: nel riepilogo sarà evidenziato come installazione autonoma inserita manualmente.</div></div>
               <div class="field full"><label class="label" for="ledProvince">Provincia installazione</label><select id="ledProvince"><option value="Catania">Catania (CT)</option><option value="Siracusa">Siracusa (SR)</option><option value="Enna">Enna (EN)</option><option value="Ragusa">Ragusa (RG)</option><option value="Messina">Messina (ME)</option><option value="Caltanissetta">Caltanissetta (CL)</option><option value="Agrigento">Agrigento (AG)</option><option value="Palermo">Palermo (PA)</option><option value="Trapani">Trapani (TP)</option></select><div class="help" id="provinceHelp">Trasferta: —</div></div>
               <div class="field full"><label class="label" for="ledCommission">Provvigione</label><input id="ledCommission" type="number" min="0" step="1" value="0" placeholder="Es. 300" /><div class="help">Valore provvigionale da aggiungere direttamente al totale Ledwall.</div></div>
             </div>
             <div class="actions">
-              <button class="btn primary" type="button" id="btnLedToGrenke" disabled>Usa importo per Grenke</button>
+              <button class="btn primary" type="button" id="btnLedToGrenke" disabled>Usa totale Ledwall per Grenke</button>
               <button class="btn ghost" type="button" id="btnResetLed">Reset Ledwall</button>
             </div>
             <div id="ledInputNotice" style="margin-top:14px"></div>
@@ -706,6 +758,11 @@
     // =============================
     const state = {
       view:'anagrafica',
+      activeLedQuoteIndex:0,
+      ledQuotes:[{
+        base:'', altezza:'', bif:false, install:'personalizza', installCustom:'0', province:'Catania', commission:'0',
+        ledResults:[], allLedResults:[], showPotentialSolutions:false, selectedLedIndex:null
+      }],
       ledResults:[],
       allLedResults:[],
       showPotentialSolutions:false,
@@ -716,10 +773,10 @@
     };
 
     const views = [
-      {id:'anagrafica', icon:'👤', title:'DATI', subtitle:'Agente e cliente'},
-      {id:'ledwall', icon:'🖥️', title:'LEDWALL', subtitle:'Configurazione impianto'},
-      {id:'grenke', icon:'💶', title:'GRENKE', subtitle:'Noleggio operativo'},
-      {id:'summary', icon:'🧾', title:'RIEPILOGO', subtitle:'Ordine e stampa'}
+      {id:'anagrafica', icon:'👤', title:'Dati', subtitle:'Agente e cliente'},
+      {id:'ledwall', icon:'🖥️', title:'Ledwall', subtitle:'Configurazione impianto'},
+      {id:'grenke', icon:'💶', title:'Grenke', subtitle:'Noleggio operativo'},
+      {id:'summary', icon:'🧾', title:'Riepilogo', subtitle:'Ordine e stampa'}
     ];
 
     const $ = (id) => document.getElementById(id);
@@ -765,8 +822,8 @@
       $('sideMode').textContent = APP_CONFIG.modeText;
       $('modePill').textContent = APP_CONFIG.modeText + ' attivo';
       $('sideClientStatus').textContent = val('clientCompany') || val('clientName') || '—';
-      const selected = getSelectedLed();
-      $('sideLedStatus').textContent = selected ? selected.nome : '—';
+      const selectedItems = selectedLedQuotes();
+      $('sideLedStatus').textContent = selectedItems.length ? `${selectedItems.length} Ledwall · ${fmtEuro0(totalLedAmount())}` : '—';
       const canone = currentCanone();
       $('sideGrenkeStatus').textContent = canone ? fmtEuro(canone) : '—';
     }
@@ -774,17 +831,141 @@
     // =============================
     // LEDWALL
     // =============================
+    const INSTALL_IMPACT_FACTORS = [1, 0.5, 0.3];
+
+    function createLedQuote(){
+      return {
+        base:'', altezza:'', bif:false, install:'personalizza', installCustom:'0', province:'Catania', commission:'0',
+        ledResults:[], allLedResults:[], showPotentialSolutions:false, selectedLedIndex:null
+      };
+    }
+
+    function activeLedQuote(){
+      if(!state.ledQuotes.length) state.ledQuotes.push(createLedQuote());
+      if(!state.ledQuotes[state.activeLedQuoteIndex]) state.activeLedQuoteIndex = 0;
+      return state.ledQuotes[state.activeLedQuoteIndex];
+    }
+
+    function installImpactFactor(index){
+      return INSTALL_IMPACT_FACTORS[index] || INSTALL_IMPACT_FACTORS[INSTALL_IMPACT_FACTORS.length - 1];
+    }
+
+    function installImpactLabel(index){
+      return index === 0 ? '100%' : (index === 1 ? '+50%' : '+30%');
+    }
+
+    function saveActiveLedQuoteFromForm(){
+      const q = activeLedQuote();
+      q.base = $('ledBase') ? $('ledBase').value : '';
+      q.altezza = $('ledHeight') ? $('ledHeight').value : '';
+      q.bif = $('ledBif') ? $('ledBif').checked : false;
+      q.install = $('ledInstall') ? $('ledInstall').value : 'personalizza';
+      q.installCustom = $('ledInstallCustom') ? $('ledInstallCustom').value : '0';
+      q.province = $('ledProvince') ? $('ledProvince').value : 'Catania';
+      q.commission = $('ledCommission') ? $('ledCommission').value : '0';
+      q.ledResults = state.ledResults;
+      q.allLedResults = state.allLedResults;
+      q.showPotentialSolutions = state.showPotentialSolutions;
+      q.selectedLedIndex = state.selectedLedIndex;
+    }
+
+    function loadActiveLedQuoteToForm(){
+      const q = activeLedQuote();
+      if($('ledBase')) $('ledBase').value = q.base || '';
+      if($('ledHeight')) $('ledHeight').value = q.altezza || '';
+      if($('ledBif')) $('ledBif').checked = !!q.bif;
+      if($('ledInstall')) $('ledInstall').value = q.install || 'personalizza';
+      if($('ledInstallCustom')) $('ledInstallCustom').value = q.installCustom || '0';
+      if($('ledProvince')) $('ledProvince').value = q.province || 'Catania';
+      if($('ledCommission')) $('ledCommission').value = q.commission || '0';
+      state.ledResults = q.ledResults || [];
+      state.allLedResults = q.allLedResults || [];
+      state.showPotentialSolutions = !!q.showPotentialSolutions;
+      state.selectedLedIndex = Number.isInteger(q.selectedLedIndex) ? q.selectedLedIndex : null;
+      toggleCustomInstallField();
+      updateProvinceHelp();
+      renderLedQuoteTabs();
+      renderLedwall();
+    }
+
+    function renderLedQuoteTabs(){
+      const wrap = $('ledQuoteTabs');
+      if(!wrap) return;
+      wrap.innerHTML = state.ledQuotes.map((q, i) => {
+        const selected = q.selectedLedIndex !== null && q.ledResults && q.ledResults[q.selectedLedIndex];
+        const active = i === state.activeLedQuoteIndex;
+        return `<button class="quote-tab ${active ? 'active' : ''} ${selected ? 'is-ready' : ''}" type="button" data-led-quote="${i}"><span class="q-status"></span>Ledwall ${i + 1}${selected ? ' · pronto' : ''}</button>`;
+      }).join('');
+      document.querySelectorAll('[data-led-quote]').forEach(btn => btn.addEventListener('click', () => setActiveLedQuote(Number(btn.dataset.ledQuote))));
+      if($('btnAddLedQuote')) $('btnAddLedQuote').disabled = state.ledQuotes.length >= 3;
+      if($('btnRemoveLedQuote')) $('btnRemoveLedQuote').disabled = state.ledQuotes.length <= 1;
+      if($('ledQuoteHelp')) $('ledQuoteHelp').textContent = `Ledwall attivo: ${state.activeLedQuoteIndex + 1}. Impatto installazione applicato: ${installImpactLabel(state.activeLedQuoteIndex)}.`;
+    }
+
+    function setActiveLedQuote(index){
+      if(index < 0 || index >= state.ledQuotes.length || index === state.activeLedQuoteIndex) return;
+      saveActiveLedQuoteFromForm();
+      state.activeLedQuoteIndex = index;
+      loadActiveLedQuoteToForm();
+      updateSideStatus();
+    }
+
+    function addLedQuote(){
+      saveActiveLedQuoteFromForm();
+      if(state.ledQuotes.length >= 3){ alert('Puoi quotare al massimo 3 Ledwall nello stesso riepilogo.'); return; }
+      state.ledQuotes.push(createLedQuote());
+      state.activeLedQuoteIndex = state.ledQuotes.length - 1;
+      loadActiveLedQuoteToForm();
+      updateSideStatus();
+    }
+
+    function removeLedQuote(){
+      if(state.ledQuotes.length <= 1) return;
+      if(!confirm('Vuoi rimuovere il Ledwall attivo dal preventivo?')) return;
+      state.ledQuotes.splice(state.activeLedQuoteIndex, 1);
+      state.activeLedQuoteIndex = Math.max(0, Math.min(state.activeLedQuoteIndex, state.ledQuotes.length - 1));
+      loadActiveLedQuoteToForm();
+      updateSideStatus();
+    }
+
+    function selectedLedQuotes(){
+      saveActiveLedQuoteFromForm();
+      return state.ledQuotes.map((q, i) => {
+        const selected = q.selectedLedIndex !== null && q.ledResults && q.ledResults[q.selectedLedIndex] ? q.ledResults[q.selectedLedIndex] : null;
+        if(!selected) return null;
+        return {...selected, quoteIndex:i, quoteNumber:i + 1, quoteData:q};
+      }).filter(Boolean);
+    }
+
+    function totalLedAmount(){
+      return selectedLedQuotes().reduce((sum, item) => sum + (admin ? item.prezzoClienteTotale : item.prezzoAgenteTotale), 0);
+    }
+
+    function toggleCustomInstallField(){
+      const isAutonoma = $('ledInstall') && $('ledInstall').value === 'autonoma';
+      const field = $('ledInstallCustomField');
+      if(field) field.classList.toggle('is-visible', !!isAutonoma);
+    }
+
     function setupLedwall(){
-      ['ledBase','ledHeight','ledInstall','ledProvince','ledCommission'].forEach(id => $(id).addEventListener('input', calcLedwall));
+      ['ledBase','ledHeight','ledInstall','ledInstallCustom','ledProvince','ledCommission'].forEach(id => {
+        if($(id)) $(id).addEventListener('input', calcLedwall);
+        if($(id)) $(id).addEventListener('change', calcLedwall);
+      });
       $('ledBif').addEventListener('change', calcLedwall);
       $('btnResetLed').addEventListener('click', () => {
-        $('ledBase').value=''; $('ledHeight').value=''; $('ledBif').checked=false; $('ledInstall').value='personalizza'; $('ledProvince').value='Catania'; $('ledCommission').value='0'; state.showPotentialSolutions=false;
-        state.ledResults=[]; state.allLedResults=[]; state.selectedLedIndex=null; state.importedLedAmount=null; renderLedwall(); updateProvinceHelp(); updateSideStatus();
+        const q = activeLedQuote();
+        Object.assign(q, createLedQuote());
+        state.showPotentialSolutions=false;
+        state.ledResults=[]; state.allLedResults=[]; state.selectedLedIndex=null;
+        loadActiveLedQuoteToForm();
+        updateSideStatus();
       });
+      if($('btnAddLedQuote')) $('btnAddLedQuote').addEventListener('click', addLedQuote);
+      if($('btnRemoveLedQuote')) $('btnRemoveLedQuote').addEventListener('click', removeLedQuote);
       $('btnLedToGrenke').addEventListener('click', transferLedToGrenke);
       $('btnImportAgain').addEventListener('click', transferLedToGrenke);
-      updateProvinceHelp();
-      renderLedwall();
+      loadActiveLedQuoteToForm();
     }
 
     function updateProvinceHelp(){
@@ -797,6 +978,7 @@
     }
 
     function calcLedwall(){
+      toggleCustomInstallField();
       updateProvinceHelp();
       const base = num('ledBase');
       const altezza = num('ledHeight');
@@ -804,22 +986,27 @@
       const tipoInst = $('ledInstall').value;
       const extraKm = (PROVINCE_KM[$('ledProvince').value] || 0) * COSTO_KM;
       const provvigione = Math.max(0, num('ledCommission') || 0);
+      const manualInstall = Math.max(0, num('ledInstallCustom') || 0);
+      const installMultiplier = installImpactFactor(state.activeLedQuoteIndex);
       state.showPotentialSolutions = false;
+
+      saveActiveLedQuoteFromForm();
 
       if(!base || !altezza){
         state.ledResults = [];
         state.allLedResults = [];
         state.selectedLedIndex = null;
+        saveActiveLedQuoteFromForm();
         renderLedwall();
         updateSideStatus();
         return;
       }
 
-      let results = ledwalls.map(model => buildLedResult(model, base, altezza, bif, tipoInst, extraKm, provvigione));
+      let results = ledwalls.map(model => buildLedResult(model, base, altezza, bif, tipoInst, extraKm, provvigione, installMultiplier, manualInstall));
       const perfectMatches = results.filter(r => r.perfectMatch);
       const rotatedMatches = results.filter(r => r.rotatedMatch);
       const bestMatch = results.reduce((prev,curr) => curr.diff < prev.diff ? curr : prev, results[0]);
-      const unified = buildUnifiedPlan(results, base, altezza, bif, tipoInst, extraKm, perfectMatches, provvigione);
+      const unified = buildUnifiedPlan(results, base, altezza, bif, tipoInst, extraKm, perfectMatches, provvigione, installMultiplier, manualInstall);
       if(unified) results.push(unified);
 
       results.forEach(r => {
@@ -848,6 +1035,7 @@
         alertHtml = `<div class="notice warn">Per questa misura ti consigliamo un <strong>${safe(bestMatch.nome)}</strong> con misure realizzabili ${bestMatch.displayWidth} × ${bestMatch.displayHeight} cm.</div>`;
       }
       $('ledAlert').innerHTML = alertHtml;
+      saveActiveLedQuoteFromForm();
       renderLedwall();
       updateSideStatus();
     }
@@ -874,7 +1062,17 @@
       return best;
     }
 
-    function buildLedResult(model, base, altezza, bif, tipoInst, extraKm, provvigione){
+    function installationBaseCost(areaMq, tipoInst, manualInstall){
+      return tipoInst === 'autonoma' ? Math.max(0, manualInstall || 0) : installCost(areaMq, tipoInst);
+    }
+
+    function installLabelFromValue(value){
+      if(!$('ledInstall')) return value;
+      const opt = Array.from($('ledInstall').options).find(o => o.value === value);
+      return opt ? opt.textContent : value;
+    }
+
+    function buildLedResult(model, base, altezza, bif, tipoInst, extraKm, provvigione, installMultiplier, manualInstall){
       const isRect = model.cabX === 50 && model.cabY === 100;
       const exactNormal = (base % model.cabX === 0 && altezza % model.cabY === 0);
       const exactRotated = isRect && !exactNormal && (base % model.cabY === 0 && altezza % model.cabX === 0);
@@ -903,7 +1101,8 @@
       const displayWidth = chosen.displayWidth;
       const displayHeight = chosen.displayHeight;
       const areaMq = (displayWidth/100) * (displayHeight/100);
-      const extraInstall = installCost(areaMq, tipoInst);
+      const baseInstall = installationBaseCost(areaMq, tipoInst, manualInstall);
+      const extraInstall = Math.round(baseInstall * installMultiplier);
       const pxSpec = PIXEL_SPECS[model.nome] || {b:0,h:0};
       const pxBaseCab = rotated ? pxSpec.h : pxSpec.b;
       const pxHeightCab = rotated ? pxSpec.b : pxSpec.h;
@@ -916,13 +1115,15 @@
         prezzoAgenteTotale:prezzoAgenteBase + extraInstall + extraKm + provvigione,
         margineCliente:(prezzoClienteBase - costoCinaBase) + provvigione,
         margineAgente:(prezzoAgenteBase - costoCinaBase) + provvigione,
-        margineInstallazione:extraInstall, margineKm:extraKm, provvigione, costoCinaBase,
+        margineInstallazione:extraInstall, installazioneBase:baseInstall, installMultiplier,
+        installImpactLabel:installImpactLabel(state.activeLedQuoteIndex), installAutonoma:tipoInst === 'autonoma', installManualValue:manualInstall, installLabel:installLabelFromValue(tipoInst),
+        margineKm:extraKm, provvigione, costoCinaBase,
         perfectMatch:perfect, rotatedMatch:exactRotated, diff, bifacciale:bif, pixelBase, pixelHeight,
         layout:{type:'standard', cols, rows, cabX:model.cabX, cabY:model.cabY, rotated, bif}
       };
     }
 
-    function buildUnifiedPlan(results, base, altezza, bif, tipoInst, extraKm, perfectMatches, provvigione){
+    function buildUnifiedPlan(results, base, altezza, bif, tipoInst, extraKm, perfectMatches, provvigione, installMultiplier, manualInstall){
       const rectModel = results.find(r => r.nome === 'P3.91' && r.cabX === 50 && r.cabY === 100);
       const sqModel = results.find(r => r.nome === 'P3.91 - 0.50x0.50' && r.cabX === 50 && r.cabY === 50);
       const condMisure = (base % 50 === 0) && (altezza % 100 === 50) && (altezza >= 150);
@@ -940,7 +1141,8 @@
       let sqCab = sqCabBase;
       if(bif){ displayCliente *= 2; displayAgente *= 2; displayCina *= 2; rectCab *= 2; sqCab *= 2; }
       const areaMq = (base/100) * (altezza/100);
-      const extraInstall = installCost(areaMq, tipoInst);
+      const baseInstall = installationBaseCost(areaMq, tipoInst, manualInstall);
+      const extraInstall = Math.round(baseInstall * installMultiplier);
       return {
         nome:'P3.91 Unificato', icon:'🧩', cabX:50, cabY:100, info:PRODUCT_DESCRIPTIONS['P3.91 Unificato'], unified:true,
         colsNeeded:colsU, rowsNeeded:rectRowsU + sqRowsU, totalCab:rectCab + sqCab,
@@ -950,7 +1152,9 @@
         prezzoAgenteTotale:displayAgente + extraInstall + extraKm + provvigione,
         margineCliente:(displayCliente - displayCina) + provvigione,
         margineAgente:(displayAgente - displayCina) + provvigione,
-        margineInstallazione:extraInstall, margineKm:extraKm, provvigione, costoCinaBase:displayCina,
+        margineInstallazione:extraInstall, installazioneBase:baseInstall, installMultiplier,
+        installImpactLabel:installImpactLabel(state.activeLedQuoteIndex), installAutonoma:tipoInst === 'autonoma', installManualValue:manualInstall, installLabel:installLabelFromValue(tipoInst),
+        margineKm:extraKm, provvigione, costoCinaBase:displayCina,
         perfectMatch:true, rotatedMatch:false, diff:0, bifacciale:bif,
         pixelBase:colsU * 128,
         pixelHeight:(rectRowsU * 256) + 128,
@@ -959,22 +1163,27 @@
     }
 
     function renderLedwall(){
+      renderLedQuoteTabs();
+      toggleCustomInstallField();
       const hasDims = num('ledBase') && num('ledHeight');
-      $('btnLedToGrenke').disabled = !getSelectedLed();
-      $('btnImportAgain').disabled = !getSelectedLed();
+      const activeSelected = getSelectedLed();
+      const selectedList = selectedLedQuotes();
+      $('btnLedToGrenke').disabled = selectedList.length === 0;
+      $('btnImportAgain').disabled = selectedList.length === 0;
       if(!hasDims){
-        $('ledInputNotice').innerHTML = '<div class="notice">Inserisci base e altezza per visualizzare le soluzioni Ledwall.</div>';
+        $('ledInputNotice').innerHTML = `<div class="notice">Stai configurando il <strong>Ledwall ${state.activeLedQuoteIndex + 1}</strong>. Inserisci base e altezza per visualizzare le soluzioni. Impatto installazione: <strong>${installImpactLabel(state.activeLedQuoteIndex)}</strong>.</div>`;
         $('resultsCount').textContent = 'Inserisci le misure';
         $('ledResults').innerHTML = '<div class="notice" style="grid-column:1/-1">Nessun risultato da mostrare. Le soluzioni migliori appariranno qui dopo il primo calcolo.</div>';
         $('ledAlert').innerHTML = '';
         return;
       }
-      $('ledInputNotice').innerHTML = '';
+      const extraAutonoma = $('ledInstall').value === 'autonoma' ? '<br/><strong>Installazione autonoma:</strong> il valore è stato inserito manualmente e sarà evidenziato in stampa.' : '';
+      $('ledInputNotice').innerHTML = `<div class="notice">Ledwall ${state.activeLedQuoteIndex + 1}: impatto installazione applicato <strong>${installImpactLabel(state.activeLedQuoteIndex)}</strong>.${extraAutonoma}</div>`;
       $('resultsCount').textContent = state.allLedResults.length && state.ledResults.length !== state.allLedResults.length ? `${state.ledResults.length} di ${state.allLedResults.length} soluzioni` : `${state.ledResults.length} soluzioni`;
       $('ledResults').innerHTML = state.ledResults.map((r,i) => productCardHtml(r,i)).join('');
-      document.querySelectorAll('[data-select-led]').forEach(btn => btn.addEventListener('click', () => {state.selectedLedIndex = Number(btn.dataset.selectLed); renderLedwall(); updateSideStatus();}));
-      document.querySelectorAll('[data-transfer-led]').forEach(btn => btn.addEventListener('click', () => {state.selectedLedIndex = Number(btn.dataset.transferLed); transferLedToGrenke();}));
-      document.querySelectorAll('[data-toggle-potentials]').forEach(btn => btn.addEventListener('click', () => {state.showPotentialSolutions = !state.showPotentialSolutions; state.ledResults = (state.showPotentialSolutions || !state.allLedResults.some(r => r.perfectMatch)) ? state.allLedResults : state.allLedResults.filter(r => r.perfectMatch); state.selectedLedIndex = 0; renderLedwall(); updateSideStatus();}));
+      document.querySelectorAll('[data-select-led]').forEach(btn => btn.addEventListener('click', () => {state.selectedLedIndex = Number(btn.dataset.selectLed); saveActiveLedQuoteFromForm(); renderLedwall(); updateSideStatus();}));
+      document.querySelectorAll('[data-transfer-led]').forEach(btn => btn.addEventListener('click', () => {state.selectedLedIndex = Number(btn.dataset.transferLed); saveActiveLedQuoteFromForm(); transferLedToGrenke();}));
+      document.querySelectorAll('[data-toggle-potentials]').forEach(btn => btn.addEventListener('click', () => {state.showPotentialSolutions = !state.showPotentialSolutions; state.ledResults = (state.showPotentialSolutions || !state.allLedResults.some(r => r.perfectMatch)) ? state.allLedResults : state.allLedResults.filter(r => r.perfectMatch); state.selectedLedIndex = 0; saveActiveLedQuoteFromForm(); renderLedwall(); updateSideStatus();}));
     }
 
     function productCardHtml(r,i){
@@ -987,6 +1196,7 @@
         <div class="pm"><span>Margine cliente</span><strong>${fmtEuro0(r.margineCliente)}</strong></div>
         <div class="pm"><span>Costo Cina</span><strong>${fmtEuro0(r.costoCinaBase)}</strong></div>` : '';
       const unifiedText = r.unified ? `<div class="notice success" style="margin:8px 0 11px">Cabinet 0.50x1.00: <strong>${r.rectCab}</strong> · Cabinet 0.50x0.50: <strong>${r.sqCab}</strong></div>` : '';
+      const autonomaText = r.installAutonoma ? `<div class="autonoma-warning"><strong>Installazione autonoma:</strong> costo inserito manualmente. Base manuale ${fmtEuro0(r.installManualValue)} · valore applicato ${fmtEuro0(r.margineInstallazione)}.</div>` : '';
       return `
         <article class="product-card ${selected ? 'selected' : ''} ${r.unified ? 'unified' : ''}">
           <div class="product-top">
@@ -996,12 +1206,13 @@
           <div class="prod-spec">${r.unified ? 'Cabinet misti P3.91' : `Cabinet ${r.cabX} × ${r.cabY} cm`}${r.bifacciale ? ' · Bifacciale' : ''}</div>
           <p class="prod-desc">${safe(PRODUCT_DESCRIPTIONS[r.nome] || r.info || '')}</p>
           ${unifiedText}
+          ${autonomaText}
           <div class="product-metrics">
             <div class="pm"><span>Numero cabinet</span><strong>${r.totalCab.toLocaleString('it-IT')}</strong></div>
             <div class="pm price"><span>${APP_CONFIG.priceLabel}</span><strong>${fmtEuro0(price)}</strong></div>
             <div class="pm"><span>Misura realizzabile</span><strong>${r.displayWidth} × ${r.displayHeight} cm</strong></div>
             <div class="pm"><span>Resa in pixel</span><strong>${r.pixelBase.toLocaleString('it-IT')} × ${r.pixelHeight.toLocaleString('it-IT')}</strong></div>
-            <div class="pm"><span>Installazione</span><strong>${fmtEuro0(r.margineInstallazione)}</strong></div>
+            <div class="pm"><span>Installazione</span><strong>${fmtEuro0(r.margineInstallazione)}</strong><small>Base ${fmtEuro0(r.installazioneBase)} · impatto ${r.installImpactLabel}</small></div>
             <div class="pm"><span>Trasferta</span><strong>${fmtEuro0(r.margineKm)}</strong></div>
             <div class="pm"><span>Provvigione</span><strong>${fmtEuro0(r.provvigione || 0)}</strong></div>
             ${detailsAdmin}
@@ -1009,7 +1220,7 @@
           <details class="schema"><summary>Visualizza schema moduli</summary><div class="layout-box">${layoutHtml(r)}</div></details>
           <div class="actions">
             <button class="btn ${selected ? 'dark' : 'ghost'}" type="button" data-select-led="${i}">${selected ? 'Selezionato' : 'Seleziona'}</button>
-            <button class="btn primary" type="button" data-transfer-led="${i}">Importa in Grenke</button>
+            <button class="btn primary" type="button" data-transfer-led="${i}">Importa totale in Grenke</button>
           </div>
         </article>`;
     }
@@ -1031,22 +1242,26 @@
     }
 
     function getSelectedLed(){
+      const q = activeLedQuote();
       if(state.selectedLedIndex === null || !state.ledResults[state.selectedLedIndex]) return null;
       return state.ledResults[state.selectedLedIndex];
     }
 
     function transferLedToGrenke(){
-      const selected = getSelectedLed();
-      if(!selected) return;
-      const amount = admin ? selected.prezzoClienteTotale : selected.prezzoAgenteTotale;
+      saveActiveLedQuoteFromForm();
+      const selectedItems = selectedLedQuotes();
+      if(!selectedItems.length) return;
+      const amount = totalLedAmount();
       state.importedLedAmount = amount;
       $('grenkeAmount').value = Math.round(amount);
-      $('grenkeImportNote').textContent = `${APP_CONFIG.transferLabel}: ${selected.nome} (${fmtEuro0(amount)}).`;
+      const label = selectedItems.length === 1 ? selectedItems[0].nome : `${selectedItems.length} Ledwall selezionati`;
+      $('grenkeImportNote').textContent = `${APP_CONFIG.transferLabel}: ${label} (${fmtEuro0(amount)}).`;
       calcGrenke(true);
       setView('grenke');
     }
 
     // =============================
+    // GRENKE    // =============================
     // GRENKE
     // =============================
     function setupGrenke(){
@@ -1130,8 +1345,9 @@
     function line(label,value){ return `<div class="line"><span>${safe(label)}</span><strong>${safe(value || '—')}</strong></div>`; }
 
     function updateSummary(){
-      const selected = getSelectedLed();
-      const ledAmount = selected ? (admin ? selected.prezzoClienteTotale : selected.prezzoAgenteTotale) : null;
+      saveActiveLedQuoteFromForm();
+      const selectedItems = selectedLedQuotes();
+      const ledAmount = selectedItems.length ? totalLedAmount() : null;
       const canone = currentCanone();
       $('sumLedTotal').textContent = ledAmount ? fmtEuro0(ledAmount) : '—';
       $('sumCanone').textContent = canone ? fmtEuro(canone) : '—';
@@ -1144,6 +1360,7 @@
         line('Telefono', val('agentPhone'))
       ].join('');
 
+      const provinces = [...new Set(state.ledQuotes.map(q => q.province || 'Catania'))].join(', ');
       $('sumClient').innerHTML = [
         line('Azienda cliente', val('clientCompany')),
         line('P.IVA / C.F.', val('clientVat')),
@@ -1151,30 +1368,35 @@
         line('Email', val('clientEmail')),
         line('Telefono', val('clientPhone')),
         line('Comune / località', val('clientCity')),
-        line('Provincia installazione', $('ledProvince').value)
+        line('Provincia installazione', provinces || $('ledProvince').value)
       ].join('');
 
-      if(selected){
+      if(selectedItems.length){
         const showInstallCost = !$('printShowInstall') || $('printShowInstall').checked;
         const showTransferCost = !$('printShowTransfer') || $('printShowTransfer').checked;
         const showCommissionCost = !$('printShowCommission') || $('printShowCommission').checked;
-        const ledLines = [
-          line('Prodotto', selected.nome),
-          line('Cabinet', selected.unified ? `Misti P3.91: ${selected.rectCab} verticali + ${selected.sqCab} quadrati` : `${selected.cabX} × ${selected.cabY} cm`),
-          line('Numero cabinet', selected.totalCab.toLocaleString('it-IT')),
-          line('Misura resa', `${selected.displayWidth} × ${selected.displayHeight} cm`),
-          line('Pixel', `${selected.pixelBase.toLocaleString('it-IT')} × ${selected.pixelHeight.toLocaleString('it-IT')}`),
-          line('Bifacciale', selected.bifacciale ? 'Sì' : 'No'),
-          line('Installazione', $('ledInstall').selectedOptions[0].textContent),
-          showInstallCost ? line('Costo installazione', fmtEuro0(selected.margineInstallazione)) : '',
-          showTransferCost ? line('Costo trasferta', fmtEuro0(selected.margineKm)) : '',
-          showCommissionCost ? line('Costo provvigione', fmtEuro0(selected.provvigione || 0)) : '',
-          line('Prezzo cliente', fmtEuro0(selected.prezzoClienteTotale)),
-          admin ? line('Prezzo agente', fmtEuro0(selected.prezzoAgenteTotale)) : '',
-          admin ? line('Margine cliente', fmtEuro0(selected.margineCliente)) : '',
-          admin ? line('Margine agente', fmtEuro0(selected.margineAgente)) : ''
-        ];
-        $('sumLed').innerHTML = ledLines.join('');
+        $('sumLed').innerHTML = selectedItems.map((selected) => {
+          const ledLines = [
+            line('Prodotto', selected.nome),
+            line('Cabinet', selected.unified ? `Misti P3.91: ${selected.rectCab} verticali + ${selected.sqCab} quadrati` : `${selected.cabX} × ${selected.cabY} cm`),
+            line('Numero cabinet', selected.totalCab.toLocaleString('it-IT')),
+            line('Misura resa', `${selected.displayWidth} × ${selected.displayHeight} cm`),
+            line('Pixel', `${selected.pixelBase.toLocaleString('it-IT')} × ${selected.pixelHeight.toLocaleString('it-IT')}`),
+            line('Bifacciale', selected.bifacciale ? 'Sì' : 'No'),
+            line('Installazione', selected.installLabel || '—'),
+            line('Impatto installazione multi Ledwall', selected.installImpactLabel || '100%'),
+            selected.installAutonoma ? line('ATTENZIONE', 'Installazione autonoma con valore inserito manualmente') : '',
+            showInstallCost ? line('Costo installazione', fmtEuro0(selected.margineInstallazione)) : '',
+            showTransferCost ? line('Costo trasferta', fmtEuro0(selected.margineKm)) : '',
+            showCommissionCost ? line('Costo provvigione', fmtEuro0(selected.provvigione || 0)) : '',
+            admin ? line('Prezzo cliente', fmtEuro0(selected.prezzoClienteTotale)) : '',
+            admin ? line('Prezzo agente', fmtEuro0(selected.prezzoAgenteTotale)) : '',
+            admin ? line('Margine cliente', fmtEuro0(selected.margineCliente)) : '',
+            admin ? line('Margine agente', fmtEuro0(selected.margineAgente)) : ''
+          ].filter(Boolean).join('');
+          const amount = admin ? selected.prezzoClienteTotale : selected.prezzoAgenteTotale;
+          return `<div class="summary-led-block"><div class="summary-led-title"><span>Ledwall ${selected.quoteNumber}</span><span>${fmtEuro0(amount)}</span></div>${ledLines}</div>`;
+        }).join('');
       } else {
         $('sumLed').innerHTML = '<div class="notice">Nessuna configurazione Ledwall selezionata.</div>';
       }
@@ -1196,6 +1418,7 @@
     }
 
     // =============================
+    // TUTORIAL GUIDATO    // =============================
     // TUTORIAL GUIDATO
     // =============================
     const tutorialState = {
@@ -1220,14 +1443,17 @@
         {selector:'#projectNotes', title:'NOTE COMMERCIALI / OPERATIVE', text:'Usa questo spazio per annotare esigenze del cliente, vincoli tecnici, scadenze o dettagli utili alla squadra operativa.'}
       ],
       ledwall:[
+	    {selector:'#ledQuoteTabs', title:'LEDWALL MULTIPLI', text:'Da qui puoi passare da un Ledwall all’altro. Puoi aggiungere fino a 3 prodotti nello stesso preventivo.'},
+        {selector:'#btnAddLedQuote', title:'AGGIUNGI LEDWALL', text:'Usa questo pulsante per aggiungere un secondo o un terzo Ledwall da quotare. L’installazione avrà un impatto diverso sul secondo e sul terzo Ledwall.'},
         {selector:'#ledBase', title:'BASE (cm)', text:'Inserisci la base desiderata in centimetri. Il calcolatore confronterà la misura con i cabinet disponibili.'},
         {selector:'#ledHeight', title:'ALTEZZA (cm)', text:'Inserisci l’altezza desiderata in centimetri. Le soluzioni compatibili appariranno a destra.'},
         {selector:'#ledBif', title:'CONFIGURAZIONE BIFACCIALE', text:'Attiva questa opzione se devi realizzare un Ledwall Bifacciale. Il calcolatore applicherà la logica per mostrarti i valori rielaborati.'},
         {selector:'#ledInstall', title:'TIPO DI INSTALLAZIONE', text:'Seleziona la modalità di installazione. Il relativo costo viene aggiunto automaticamente al totale Ledwall.'},
+        {selector:'#ledInstallCustomField', title:'INSTALLAZIONE AUTONOMA', text:'Questo campo ti permette di impostare liberamente il valore dell’installazione. Verrà mostrato un avviso nel file di stampa.'},
         {selector:'#ledProvince', title:'PROVINCIA INSTALLAZIONE', text:'Scegli la provincia. Se è prevista trasferta, il costo viene calcolato automaticamente.'},
         {selector:'#ledCommission', title:'PROVVIGIONE', text:'Inserisci qui il tuo valore provvigionale. Il valore viene caricato direttamente sul totale Ledwall e mostrato nella card. Potrai successivamente nasconderlo dalla Stampa.'},
         {selector:'#ledResults', title:'RISULTATI', text:'Qui trovi le soluzioni generate. Se esistono misure perfette, il sistema mostra prima solo quelle compatibili. Prova diverse soluzioni e trova il prodotto più adatto alle tue esigenze.'},
-        {selector:'#btnLedToGrenke', title:'USA IMPORTO PER GRENKE', text:'Dopo aver selezionato un prodotto, questo pulsante trasferisce l’importo direttamente nel calcolatore Grenke. Puoi anche trasferire l’importo direttamente dal Ledwall in evidenza.'}
+        {selector:'#btnLedToGrenke', title:'USA IMPORTO PER GRENKE', text:'Dopo aver selezionato un prodotto o un gruppo, questo pulsante trasferisce l’importo direttamente nel calcolatore Grenke. Puoi anche trasferire l’importo direttamente dal Ledwall in evidenza.'}
       ],
       grenke:[
         {selector:'#grenkeAmount', title:'IMPORTO NOLEGGIO', text:'Qui puoi inserire un importo manualmente oppure usare quello importato da un Ledwall.'},
