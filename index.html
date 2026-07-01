@@ -282,6 +282,10 @@
     .input-inv{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:#fff}
     .input-inv::placeholder{color:rgba(255,255,255,.56)}
     .input-inv:focus{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.13)}
+    .ifis-panel select.input-inv{background:#fff!important;color:#081a31!important;border-color:rgba(255,255,255,.55)!important;font-weight:900}
+    .ifis-panel select.input-inv:focus{border-color:#fff!important;box-shadow:0 0 0 4px rgba(255,255,255,.16)!important}
+    .ifis-panel select.input-inv option{background:#fff!important;color:#081a31!important;font-weight:800}
+    .ifis-panel select.input-inv option:checked{background:#dbeafe!important;color:#081a31!important}
     .mode{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
     .mode-btn{border:2px solid rgba(255,255,255,.15);border-radius:14px;padding:12px;background:rgba(255,255,255,.09);color:#fff;font-weight:950}
     .mode-btn[aria-pressed="true"]{background:#ffe59a;color:#18324d;border-color:#f1c54a}
@@ -295,6 +299,13 @@
     .print-rate{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:850;color:rgba(255,255,255,.78);white-space:nowrap}
     .print-rate input{width:15px;height:15px;accent-color:#fff}
     .grenke-selection-note{margin-top:9px;color:rgba(255,255,255,.68);font-size:12px;line-height:1.45}
+    .durata-item input[type="radio"], .print-rate input[type="checkbox"]{appearance:none;-webkit-appearance:none;position:relative;width:18px!important;height:18px!important;min-width:18px;border:1.5px solid rgba(255,255,255,.95);background:#fff;box-shadow:none;accent-color:#111827;display:inline-grid;place-items:center;vertical-align:middle;flex:0 0 auto}
+    .durata-item input[type="radio"]{border-radius:999px}
+    .print-rate input[type="checkbox"]{border-radius:4px}
+    .durata-item input[type="radio"]:checked{border-color:#fff;background:#fff;box-shadow:none}
+    .durata-item input[type="radio"]:checked::after{content:"";position:absolute;inset:5px;border-radius:999px;background:#111827}
+    .print-rate input[type="checkbox"]:checked{border-color:#111827;background:#111827;box-shadow:none}
+    .print-rate input[type="checkbox"]:checked::after{content:"✓";position:absolute;left:3px;top:-1px;font-size:13px;line-height:18px;font-weight:700;color:#fff}
     .aside-stack{display:flex;flex-direction:column;gap:12px}
     .kpi-tile{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-soft);overflow:hidden}
     .kpi-head{background:#0b1b2d;color:#fff;padding:14px 16px;font-weight:950;text-transform:uppercase;letter-spacing:.08em;font-size:12px}
@@ -404,6 +415,9 @@
     .tech-image-inner img{display:block;max-height:240px;max-width:100%;width:auto;height:auto;object-fit:contain;object-position:center center;margin:auto}
     .features-table{width:100%;border-collapse:collapse;font-size:13px}
     .features-table td{border:2px solid #111827;background:#e9eef8;padding:6px 10px;text-align:center;font-weight:900;width:50%;-webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust:exact}
+    .ifis-beni td{border-bottom:1px solid #6573bf;padding:6px 8px;font-weight:700}
+    .ifis-beni th:nth-child(2), .ifis-beni td:nth-child(2){text-align:center;width:18%}
+    .ifis-beni th:nth-child(3), .ifis-beni td:nth-child(3){text-align:center;width:20%}
     .features-table td span{color:#143f8f}
     .finance-copy{font-size:13px;line-height:1.45;color:#111827;margin:12px 0}
     .acceptance-box{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
@@ -475,6 +489,54 @@
     .draft-slot-actions .btn{font-size:12px;padding:8px 10px;border-radius:12px}
     .draft-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:9300;width:min(560px,calc(100vw - 28px));background:#081a31;color:#fff;border-radius:18px;box-shadow:0 22px 58px rgba(0,0,0,.32);padding:13px 15px;font-size:13px;line-height:1.45;text-align:center}
     .draft-toast.hidden{display:none}
+
+
+    /* PATCH NOTES / NOVITA VERSIONE */
+    .patch-notes-layer.hidden{display:none}
+    .patch-notes-dim{position:fixed;inset:0;background:rgba(8,26,49,.68);z-index:9500;backdrop-filter:blur(4px)}
+    .patch-notes-panel{
+      position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9501;
+      width:min(720px,calc(100vw - 28px));max-height:min(86vh,780px);overflow:auto;
+      background:linear-gradient(180deg,#ffffff,#f8fbff);color:#081a31;
+      border:1px solid rgba(226,232,240,.95);border-radius:28px;box-shadow:0 32px 90px rgba(0,0,0,.38);
+      padding:0;
+    }
+    .patch-notes-hero{
+      background:linear-gradient(135deg,#082b63,#1456b3 62%,#2563eb);
+      color:#fff;padding:24px 24px 20px;position:relative;overflow:hidden;
+    }
+    .patch-notes-hero:after{content:"";position:absolute;right:-55px;top:-70px;width:190px;height:190px;border-radius:999px;background:rgba(255,255,255,.13);pointer-events:none;z-index:0}
+    .patch-notes-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#bfdbfe;font-weight:950;margin-bottom:8px;position:relative;z-index:1}
+    .patch-notes-hero h3{margin:0;font-size:25px;line-height:1.12;font-weight:950;letter-spacing:-.03em;position:relative;z-index:1}
+    .patch-notes-hero p{margin:9px 0 0;color:rgba(255,255,255,.82);font-size:13px;line-height:1.55;max-width:560px;position:relative;z-index:1}
+    .patch-notes-close{position:absolute;right:16px;top:16px;width:38px;height:38px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.10);color:#fff;font-size:22px;line-height:1;font-weight:950;z-index:3;pointer-events:auto}
+    .patch-notes-body{padding:18px 22px 22px}
+    .patch-notes-list{display:grid;gap:10px;margin:0 0 14px 0;padding:0;list-style:none}
+    .patch-notes-item{display:grid;grid-template-columns:42px minmax(0,1fr);gap:11px;align-items:start;border:1px solid var(--line);background:#fff;border-radius:18px;padding:12px;box-shadow:0 8px 20px rgba(15,23,42,.05)}
+    .patch-notes-emoji{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;background:#eff6ff;font-size:21px}
+    .patch-notes-item strong{display:block;font-size:14px;color:#0a3570;margin-bottom:3px}
+    .patch-notes-item span{display:block;font-size:12.5px;color:#64748b;line-height:1.45}
+    .patch-notes-foot{border:1px solid #bfdbfe;background:#eff6ff;color:#1e3a8a;border-radius:16px;padding:12px 13px;font-size:12.5px;line-height:1.5;margin-bottom:14px}
+    .patch-notes-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+    @media (max-width:640px){.patch-notes-panel{border-radius:22px}.patch-notes-hero{padding:22px 18px 18px}.patch-notes-body{padding:15px}.patch-notes-hero h3{font-size:22px}.patch-notes-item{grid-template-columns:36px minmax(0,1fr)}.patch-notes-emoji{width:36px;height:36px;border-radius:13px}}
+
+
+    /* CALCOLO MANUALE GRENKE / IFIS */
+    .calc-loading-layer.hidden{display:none}
+    .calc-loading-layer{position:fixed;inset:0;z-index:9400;display:grid;place-items:center;background:rgba(8,26,49,.30);backdrop-filter:blur(2px)}
+    .calc-loading-box{min-width:220px;border-radius:22px;background:#fff;color:#081a31;box-shadow:0 26px 70px rgba(15,23,42,.32);padding:22px;text-align:center;border:1px solid rgba(226,232,240,.95)}
+    .calc-spinner{width:36px;height:36px;border-radius:999px;border:4px solid #e2e8f0;border-top-color:#1456b3;margin:0 auto 12px;animation:calcSpin .8s linear infinite}
+    .calc-loading-title{font-size:14px;font-weight:950;text-transform:uppercase;letter-spacing:.08em;color:#143f8f}
+    .calc-loading-sub{font-size:12px;color:#64748b;margin-top:5px;line-height:1.4}
+    @keyframes calcSpin{to{transform:rotate(360deg)}}
+    .recalc-value{color:#f59e0b!important;background:transparent!important;border:none!important;box-shadow:none!important;padding:0!important;border-radius:0!important}
+    .recalc-value::after{content:none!important}
+    .ifis-dirty-field{border-color:#f59e0b!important;background:#fff7ed!important;color:#111827!important;box-shadow:0 0 0 2px rgba(245,158,11,.50)!important}
+    .ifis-dirty-field::placeholder{color:#92400e!important}
+    .ifis-btn-group.ifis-dirty-field{outline:2px solid #f59e0b!important;outline-offset:2px!important;border-radius:14px;background:rgba(245,158,11,.10)!important;box-shadow:none!important;padding:0!important}
+    .ifis-btn-group.ifis-dirty-field .ifis-choice{color:#fff!important}
+    .ifis-btn-group.ifis-dirty-field .ifis-choice.active{background:#fff!important;color:#072b84!important;border-color:#fff!important}
+    .btn.needs-recalc{background:#f59e0b!important;color:#111827!important;box-shadow:0 12px 22px rgba(245,158,11,.22)!important}
 
 
     /* IFIS / Leasing */
@@ -715,6 +777,7 @@
             <div class="form-grid">
               <div class="field"><label class="label" for="agentName">Nome agente</label><input id="agentName" placeholder="Es. Mario Rossi" /></div>
               <div class="field"><label class="label" for="agentCompany">Azienda / Brand</label><input id="agentCompany" value="LED LAB COMPANY - SEEMAX DISPLAY" readonly aria-readonly="true" /></div>
+              <div class="field"><label class="label" for="quoteNumber">Numero preventivo</label><input id="quoteNumber" placeholder="Es. 211" /></div>
               <div class="field"><label class="label" for="agentEmail">Email agente</label><input id="agentEmail" type="email" placeholder="email@agente.it" /></div>
               <div class="field"><label class="label" for="agentPhone">Telefono agente</label><input id="agentPhone" placeholder="+39 ..." /></div>
               <div class="field"><label class="label" for="clientCompany">Azienda cliente</label><input id="clientCompany" placeholder="Ragione sociale cliente" /></div>
@@ -934,6 +997,33 @@
     <div class="draft-modal-panel" id="draftModalPanel" role="dialog" aria-modal="true" aria-label="Bozze preventivo"></div>
   </div>
   <div class="draft-toast hidden no-print" id="draftToast"></div>
+
+  <div class="calc-loading-layer hidden no-print" id="calcLoadingLayer" aria-live="polite" aria-busy="true">
+    <div class="calc-loading-box" role="status">
+      <div class="calc-spinner" aria-hidden="true"></div>
+      <div class="calc-loading-title" id="calcLoadingTitle">Calcolo in corso</div>
+      <div class="calc-loading-sub">Aggiornamento dei valori, attendere un istante.</div>
+    </div>
+  </div>
+
+  <div class="patch-notes-layer hidden no-print" id="patchNotesLayer" aria-live="polite">
+    <div class="patch-notes-dim" data-close-patch-notes></div>
+    <section class="patch-notes-panel" role="dialog" aria-modal="true" aria-labelledby="patchNotesTitle">
+      <div class="patch-notes-hero">
+        <button class="patch-notes-close" type="button" id="btnPatchNotesClose" aria-label="Chiudi novità">×</button>
+        <div class="patch-notes-kicker" id="patchNotesVersionLabel">Aggiornamento</div>
+        <h3 id="patchNotesTitle">Novità Seemax Quotation Planner</h3>
+        <p id="patchNotesIntro">Scopri rapidamente cosa è cambiato in questa versione.</p>
+      </div>
+      <div class="patch-notes-body">
+        <ul class="patch-notes-list" id="patchNotesList"></ul>
+        <div class="patch-notes-foot" id="patchNotesFoot"></div>
+        <div class="patch-notes-actions">
+          <button class="btn primary" type="button" id="btnPatchNotesOk">Ho capito</button>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <div class="tutorial-layer hidden no-print" id="tutorialLayer" aria-live="polite">
     <div class="tutorial-dim"></div>
@@ -1220,6 +1310,8 @@
       currentDraftId:null,
       grenkeMode:'mensile',
       grenkeCalculated:false,
+      grenkeDirty:false,
+      grenkeLastSignature:null,
       grenkePrintDurations:[36,48,60],
       financeProvider:'grenke'
     };
@@ -1241,6 +1333,40 @@
     const num = (id) => Math.max(0, Number(($(id) && $(id).value) || 0));
     const val = (id) => (($(id) && $(id).value) || '').trim();
     const safe = (s) => String(s ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+
+    // =============================
+    // PATCH NOTES / NOVITA VERSIONE
+    // =============================
+    // MODIFICA QUI LE PATCH NOTES:
+    // 1) cambia PATCH_NOTES.version ad ogni nuovo aggiornamento che vuoi mostrare una sola volta;
+    // 2) personalizza title, intro e items;
+    // 3) il browser salva la versione vista in localStorage, quindi la finestra appare una sola volta per dispositivo/browser.
+    const PATCH_NOTES_STORAGE_KEY = 'SEEMAX_QUOTATION_PLANNER_PATCH_NOTES_VERSION';
+    const PATCH_NOTES = {
+      version:'2026-07-01-patch-notes-01',
+      label:'Aggiornamento · Luglio 2026',
+      title:'Novità del Seemax Quotation Planner',
+      intro:'Abbiamo rifinito il Planner per renderlo ancora più chiaro, ordinato e professionale nella gestione delle tue attività.',
+      items:[
+        {emoji:'🧾', title:'Nuovo Campo: N° Prev.', text:'Il campo Numero Preventivo ti permette di inserire un numero identificativo del preventivo che lo rende più facile da riconoscere.'},
+        {emoji:'💶', title:'Modifica al calcolatore Grenke', text:'I valori non vengono più calcolati in tempo reale. E\' necessario adesso calcolare manualmente premendo l\'apposito pulsante.'},
+        {emoji:'🏦', title:'Modifica al calcolatore IFIS', text:'E\' adesso mostrato nel file di stampa il tipo di bene selezionato dalla schermata Ledwall. I valori non vengono più calcolati in tempo reale. E\' necessario adesso calcolare manualmente premendo l\'apposito pulsante.'},
+        {emoji:'📱', title:'Esperienza mobile migliorata', text:'Tutte le schermate sono state rifinite per essere più leggibili anche da smartphone. La schermata di Grenke adesso consente di selezionare le rate applicabili sulla stampa in maniera più semplice'},
+        {emoji:'✨', title:'Patch Notes introdotte', text:'Da questa versione, le novità vengono mostrate direttamente sul Seemax Quotation Planner. Nell\'applicazione Seemax for You riceverai un semplice avviso qual\'ora gli strumenti legati al S.Q.P venisserò aggiornati.'}
+      ],
+      footer:'Le Patch Notes sono locali: se cambi browser, dispositivo o cancelli i dati del sito, potrebbero essere mostrate nuovamente.'
+    };
+
+    function showCalcLoading(title, callback){
+      const layer = $('calcLoadingLayer');
+      const titleEl = $('calcLoadingTitle');
+      if(titleEl) titleEl.textContent = title || 'Calcolo in corso';
+      if(layer) layer.classList.remove('hidden');
+      setTimeout(() => {
+        try{ if(typeof callback === 'function') callback(); }
+        finally{ if(layer) layer.classList.add('hidden'); }
+      }, 1000);
+    }
 
     function initNavigation(){
       const side = $('sideNav');
@@ -1288,7 +1414,7 @@
 
     function setupDataInputs(){
       if($('agentCompany')) $('agentCompany').value = 'LED LAB COMPANY - SEEMAX DISPLAY';
-      ['agentName','agentCompany','agentEmail','agentPhone','clientCompany','clientVat','clientName','clientEmail','clientPhone','clientCity','projectNotes'].forEach(id => {
+      ['agentName','agentCompany','quoteNumber','agentEmail','agentPhone','clientCompany','clientVat','clientName','clientEmail','clientPhone','clientCity','projectNotes'].forEach(id => {
         const node = $(id);
         if(node) node.addEventListener('input', () => {updateSideStatus(); if(state.view === 'summary') updateSummary();});
       });
@@ -1510,7 +1636,7 @@
       if(hasCompatible){
         const hiddenCount = Math.max(0, results.length - compatibleResults.length);
         if(hiddenCount > 0){
-          alertHtml = `<div class="notice success">Sono visibili solo le soluzioni compatibili con la misura inserita. <button class="btn soft" type="button" data-toggle-potentials style="margin-left:8px;padding:8px 10px">${state.showPotentialSolutions ? 'Mostra solo soluzioni principali' : 'ALTRE SOLUZIONI'}</button></div>`;
+          alertHtml = `<div class="notice success">Sono visibili solo le soluzioni compatibili con la misura inserita. <button class="btn soft" type="button" data-toggle-potentials style="margin-left:8px;padding:8px 10px">${state.showPotentialSolutions ? 'SOLUZIONI MIGLIORI' : 'ALTRE SOLUZIONI'}</button></div>`;
         }
       } else if(rotatedMatches.length > 0){
         alertHtml = '<div class="notice warn">⚠️ È possibile ruotare alcuni cabinet verticali in orientamento orizzontale per ottenere questa misura, ma non è consigliato.</div>';
@@ -1675,7 +1801,20 @@
       $('ledResults').innerHTML = state.ledResults.map((r,i) => productCardHtml(r,i)).join('');
       document.querySelectorAll('[data-select-led]').forEach(btn => btn.addEventListener('click', () => {state.selectedLedIndex = Number(btn.dataset.selectLed); saveActiveLedQuoteFromForm(); renderLedwall(); updateSideStatus();}));
       document.querySelectorAll('[data-transfer-led]').forEach(btn => btn.addEventListener('click', () => {state.selectedLedIndex = Number(btn.dataset.transferLed); saveActiveLedQuoteFromForm(); transferLedToGrenke();}));
-      document.querySelectorAll('[data-toggle-potentials]').forEach(btn => btn.addEventListener('click', () => {state.showPotentialSolutions = !state.showPotentialSolutions; state.ledResults = (state.showPotentialSolutions || !state.allLedResults.some(r => r.perfectMatch)) ? state.allLedResults : state.allLedResults.filter(r => r.perfectMatch); state.selectedLedIndex = 0; saveActiveLedQuoteFromForm(); renderLedwall(); updateSideStatus();}));
+      document.querySelectorAll('[data-toggle-potentials]').forEach(btn => {
+        btn.onclick = () => {
+          const hasCompatible = state.allLedResults.some(r => r.perfectMatch);
+          state.showPotentialSolutions = hasCompatible ? !state.showPotentialSolutions : true;
+          state.ledResults = (state.showPotentialSolutions || !hasCompatible) ? state.allLedResults : state.allLedResults.filter(r => r.perfectMatch);
+          state.selectedLedIndex = 0;
+          saveActiveLedQuoteFromForm();
+          renderLedwall();
+          document.querySelectorAll('[data-toggle-potentials]').forEach(toggleBtn => {
+            toggleBtn.textContent = state.showPotentialSolutions ? 'SOLUZIONI MIGLIORI' : 'ALTRE SOLUZIONI';
+          });
+          updateSideStatus();
+        };
+      });
     }
 
     function productCardHtml(r,i){
@@ -1749,7 +1888,8 @@
       $('grenkeAmount').value = Math.round(amount);
       const label = selectedItems.length === 1 ? selectedItems[0].nome : `${selectedItems.length} Ledwall selezionati`;
       $('grenkeImportNote').textContent = `${APP_CONFIG.transferLabel}: ${label} (${fmtEuro0(amount)}).`;
-      calcGrenke(true);
+      state.financeProvider = 'grenke';
+      markGrenkeNeedsRecalc();
       setView('grenke');
     }
 
@@ -1771,12 +1911,12 @@
     // GRENKE
     // =============================
     function setupGrenke(){
-      $('btnGrenkeCalc').addEventListener('click', () => calcGrenke(false));
-      $('grenkeAmount').addEventListener('input', () => { state.grenkeCalculated = false; updateGrenkePreview(); updateSideStatus(); });
+      $('btnGrenkeCalc').addEventListener('click', () => requestGrenkeCalculation(false));
+      $('grenkeAmount').addEventListener('input', () => markGrenkeNeedsRecalc());
       $('modeMonthly').addEventListener('click', () => setGrenkeMode('mensile'));
       $('modeQuarterly').addEventListener('click', () => setGrenkeMode('trimestrale'));
       setupGrenkePrintDurationSelectors();
-      document.querySelectorAll('input[name="grenkeDuration"]').forEach(r => r.addEventListener('change', () => { calcGrenke(true); if(state.view === 'summary') updateSummary(); }));
+      document.querySelectorAll('input[name="grenkeDuration"]').forEach(r => r.addEventListener('change', () => markGrenkeNeedsRecalc()));
       updateGrenkePreview();
     }
 
@@ -1784,7 +1924,7 @@
       state.grenkeMode = mode;
       $('modeMonthly').setAttribute('aria-pressed', mode === 'mensile');
       $('modeQuarterly').setAttribute('aria-pressed', mode === 'trimestrale');
-      calcGrenke(true);
+      markGrenkeNeedsRecalc();
     }
 
     function selectedDuration(){
@@ -1828,25 +1968,74 @@
 
     function grenkeAmount(){ return Math.max(0, Number($('grenkeAmount').value || 0)); }
 
+    function setGrenkeRecalcClass(el, active){
+      if(!el) return;
+      // Evidenzia il valore precedente quando serve ricalcolare, senza sostituire il testo con animazioni o label invasive.
+      el.classList.toggle('recalc-value', !!active);
+    }
+
+    function clearGrenkeRecalcClasses(){
+      ['mainCanone','kpiIstr','kpiAss','kpiRisc','cn24','cn30','cn36','cn48','cn60'].forEach(id => setGrenkeRecalcClass($(id), false));
+      if($('btnGrenkeCalc')) $('btnGrenkeCalc').classList.remove('needs-recalc');
+    }
+
+    function grenkeInputSignature(){
+      return JSON.stringify({amount:grenkeAmount(), mode:state.grenkeMode, duration:selectedDuration()});
+    }
+
+    function markGrenkeNeedsRecalc(){
+      const imp = grenkeAmount();
+      const sameAsLast = !!(state.grenkeLastSignature && grenkeInputSignature() === state.grenkeLastSignature && imp);
+      state.grenkeCalculated = sameAsLast;
+      state.grenkeDirty = !!imp && !sameAsLast;
+      updateGrenkePreview();
+      updateSideStatus();
+      if(state.view === 'summary') updateSummary();
+    }
+
+    function requestGrenkeCalculation(silent){
+      showCalcLoading('Calcolo Grenke', () => calcGrenke(silent));
+    }
+
     function updateGrenkePreview(){
       const imp = grenkeAmount();
+      const needsRecalc = !!(state.grenkeDirty && imp);
       [24,30,36,48,60].forEach(m => {
-        const c = imp ? coeffOf(state.grenkeMode,m,imp) : null;
         const span = $('cn' + m);
-        if(span) span.textContent = c ? fmtEuro(imp*c) : '—';
+        if(!span) return;
+        if(needsRecalc){ setGrenkeRecalcClass(span, true); return; }
+        setGrenkeRecalcClass(span, false);
+        const c = (state.grenkeCalculated && imp) ? coeffOf(state.grenkeMode,m,imp) : null;
+        span.textContent = c ? fmtEuro(imp*c) : '—';
       });
-      if(!state.grenkeCalculated){
-        $('mainCanone').textContent = '—';
-        $('canoneNote').textContent = 'Valore netto al mese per la durata selezionata.';
-        $('kpiIstr').textContent = '—';
-        $('kpiAss').textContent = '—';
-        $('kpiRisc').textContent = '—';
+      if(state.grenkeCalculated && imp){
+        const dur = selectedDuration();
+        const c = coeffOf(state.grenkeMode,dur,imp);
+        const canone = c ? imp*c : null;
+        clearGrenkeRecalcClasses();
+        $('mainCanone').textContent = fmtEuro(canone);
+        $('canoneNote').textContent = `Valore netto al mese per la durata di ${dur} mesi${state.grenkeMode === 'trimestrale' ? ' (mensilità equivalente con fatturazione trimestrale)' : ''}.`;
+        $('kpiIstr').textContent = fmtEuro(SPESE_ISTRUTTORIA);
+        $('kpiAss').textContent = fmtEuro(imp * ASSIC_PCT);
+        $('kpiRisc').textContent = fmtEuro(imp * RISC_PCT);
+      } else {
+        const ids = ['mainCanone','kpiIstr','kpiAss','kpiRisc'];
+        ids.forEach(id => {
+          const el = $(id);
+          if(!el) return;
+          if(needsRecalc){ setGrenkeRecalcClass(el, true); }
+          else { el.textContent = '—'; setGrenkeRecalcClass(el, false); }
+        });
+        $('canoneNote').textContent = needsRecalc ? 'Valori modificati: clicca CALCOLA GRENKE per aggiornare i dati.' : 'Valore netto al mese per la durata selezionata.';
+        if($('btnGrenkeCalc')) $('btnGrenkeCalc').classList.toggle('needs-recalc', needsRecalc);
       }
     }
 
     function calcGrenke(silent){
       const imp = grenkeAmount();
       if(!imp){
+        state.grenkeDirty = false;
+        state.grenkeCalculated = false;
         updateGrenkePreview();
         if(!silent) alert('Inserisci un importo valido (IVA esclusa).');
         updateSideStatus();
@@ -1856,6 +2045,9 @@
       const c = coeffOf(state.grenkeMode,dur,imp);
       const canone = c ? imp*c : null;
       state.grenkeCalculated = true;
+      state.grenkeDirty = false;
+      state.grenkeLastSignature = grenkeInputSignature();
+      clearGrenkeRecalcClasses();
       state.financeProvider = 'grenke';
       $('mainCanone').textContent = fmtEuro(canone);
       $('canoneNote').textContent = `Valore netto al mese per la durata di ${dur} mesi${state.grenkeMode === 'trimestrale' ? ' (mensilità equivalente con fatturazione trimestrale)' : ''}.`;
@@ -1902,6 +2094,8 @@
       const OFFICIAL_IFIS_7850_60_BASE = 7.2714 - DEFAULT_SPREAD_IFIS;
       const ifisState = {duration:60, advancePct:0, residualPct:1, periodicity:1, istruttoria:300, gestioneBene:DEFAULT_GESTIONE_BENE_IFIS};
       let lastResult = null;
+      let ifisDirty = false;
+      let lastInputSignature = null;
       const ifisEuroFmt = new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2});
       const pctFmt2 = new Intl.NumberFormat('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2});
       const pctFmt4 = new Intl.NumberFormat('it-IT',{minimumFractionDigits:4,maximumFractionDigits:4});
@@ -2016,6 +2210,8 @@
         const teg = tegMonthly * 12 * 100;
         const taeg = (Math.pow(1 + tegMonthly, 12) - 1) * 100;
         lastResult = {...x, canone, canoneVat, coeffReal, advanceVat, istruttoriaVat, gestioneVat, firstPayment, tan, tae, teg, taeg};
+        lastInputSignature = ifisInputSignature();
+        clearIfisDirty();
         render(lastResult);
         if(!silent || state.view === 'ifis' || state.financeProvider === 'ifis') state.financeProvider = 'ifis';
         updateSideStatus();
@@ -2046,6 +2242,48 @@
           alerts.innerHTML = html;
         }
       }
+      function ifisInputSignature(){
+        const x = getInputs();
+        return JSON.stringify({
+          asset:x.asset,
+          spread:x.spread,
+          advanceCustom:ie('AdvanceCustomPct') ? ie('AdvanceCustomPct').value.trim() : '',
+          duration:ifisState.duration,
+          advancePct:ifisState.advancePct,
+          residualPct:ifisState.residualPct,
+          periodicity:ifisState.periodicity,
+          istruttoria:ifisState.istruttoria,
+          gestioneBene:ifisState.gestioneBene
+        });
+      }
+      function ifisDirtyTargets(){
+        return [ie('AssetValue'), ie('SpreadInput'), ie('AdvanceCustomPct'), ie('GestioneBeneSelect'), ie('DurationButtons'), ie('AdvanceButtons'), ie('ResidualButtons'), ie('PeriodicityButtons'), ie('IstruttoriaButtons')].filter(Boolean);
+      }
+      function markIfisDirty(target){
+        const sameAsLast = !!(lastResult && lastInputSignature && ifisInputSignature() === lastInputSignature);
+        if(sameAsLast){
+          clearIfisDirty();
+          render(lastResult);
+          updateSideStatus();
+          if(state.view === 'summary') updateSummary();
+          return;
+        }
+        ifisDirty = true;
+        if(target) target.classList.add('ifis-dirty-field');
+        if($('btnIfisCalc')) $('btnIfisCalc').classList.add('needs-recalc');
+        const alerts = ie('Alerts');
+        if(alerts) alerts.innerHTML = '<div class="notice warn"><strong>Ricalcolo richiesto:</strong> alcuni valori IFIS sono stati modificati. Clicca CALCOLA IFIS per aggiornare canone, tassi e preventivo.</div>';
+        updateSideStatus();
+        if(state.view === 'summary') updateSummary();
+      }
+      function clearIfisDirty(){
+        ifisDirty = false;
+        ifisDirtyTargets().forEach(el => el.classList.remove('ifis-dirty-field'));
+        if($('btnIfisCalc')) $('btnIfisCalc').classList.remove('needs-recalc');
+      }
+      function requestIfisCalculation(silent){
+        showCalcLoading('Calcolo IFIS', () => calculate(silent));
+      }
       function attachButtons(groupId, key){
         const group = ie(groupId);
         if(!group) return;
@@ -2053,16 +2291,16 @@
           ifisState[key] = Number(btn.dataset.value);
           if(groupId === 'AdvanceButtons' && ie('AdvanceCustomPct')) ie('AdvanceCustomPct').value = '';
           setActive(groupId, ifisState[key]);
-          calculate(true);
+          markIfisDirty(group);
         }));
       }
       function importAmount(amount){
         if(ie('AssetValue')) ie('AssetValue').value = Math.round(n(amount));
-        calculate(true);
+        markIfisDirty(ie('AssetValue'));
       }
       function collectDraft(){
         const r = lastResult;
-        return {asset:ie('AssetValue') ? ie('AssetValue').value : '', spread:ie('SpreadInput') ? ie('SpreadInput').value : '', advanceCustom:ie('AdvanceCustomPct') ? ie('AdvanceCustomPct').value : '', state:{...ifisState}, calculated:!!lastResult};
+        return {asset:ie('AssetValue') ? ie('AssetValue').value : '', spread:ie('SpreadInput') ? ie('SpreadInput').value : '', advanceCustom:ie('AdvanceCustomPct') ? ie('AdvanceCustomPct').value : '', state:{...ifisState}, calculated:!!lastResult && !ifisDirty, dirty:!!ifisDirty};
       }
       function applyDraft(data){
         if(!data) return;
@@ -2072,11 +2310,11 @@
         Object.assign(ifisState, {duration:60, advancePct:0, residualPct:1, periodicity:1, istruttoria:300, gestioneBene:DEFAULT_GESTIONE_BENE_IFIS}, data.state || {});
         setActive('DurationButtons', ifisState.duration); setActive('AdvanceButtons', ifisState.advancePct); setActive('ResidualButtons', ifisState.residualPct); setActive('PeriodicityButtons', ifisState.periodicity); setActive('IstruttoriaButtons', ifisState.istruttoria);
         if(ie('GestioneBeneSelect')) ie('GestioneBeneSelect').value = String(ifisState.gestioneBene);
-        if(data.calculated) calculate(true); else { lastResult = null; render({asset:n(ie('AssetValue') && ie('AssetValue').value), canone:0, canoneVat:0, firstPayment:0, coeffReal:0, advanceNet:0, residual:0, duration:ifisState.duration, months:Math.floor((ifisState.duration-1)/ifisState.periodicity), periodicity:ifisState.periodicity, tan:0, tae:0, teg:0}); }
+        if(data.calculated) calculate(true); else { lastResult = null; ifisDirty = !!data.dirty; render({asset:n(ie('AssetValue') && ie('AssetValue').value), canone:0, canoneVat:0, firstPayment:0, coeffReal:0, advanceNet:0, residual:0, duration:ifisState.duration, months:Math.floor((ifisState.duration-1)/ifisState.periodicity), periodicity:ifisState.periodicity, tan:0, tae:0, teg:0}); if(ifisDirty) markIfisDirty(); }
       }
       function summaryHtml(lineFn){
-        const r = lastResult;
-        if(!r) return '<div class="notice">Nessun calcolo IFIS disponibile.</div>';
+        const r = ifisDirty ? null : lastResult;
+        if(!r) return '<div class="notice warn">Ricalcola IFIS prima di usare il risultato nel riepilogo.</div>';
         return [
           lineFn('Provider', 'IFIS Leasing'),
           lineFn('Valore bene', e(r.asset)),
@@ -2112,6 +2350,9 @@
       }
       function printRowIfis(label, value, extra=''){
         return `<tr><td>${label}${extra ? `<div class="subrow">${extra}</div>` : ''}</td><td>${value}</td></tr>`;
+      }
+      function ifisBeniRowHtml(){
+        return `<tbody><tr><td>${escIfis(ifisAssetName())}</td><td>1</td><td>Nuovo</td></tr></tbody>`;
       }
       function buildIfisPrintHtml(r){
         const d = todayIt();
@@ -2150,6 +2391,9 @@
   table { width: 100%; border-collapse: collapse; }
   .beni { margin-top: 8px; font-size: 10.5px; }
   .beni th { background:#6573bf; color:white; text-align:left; padding:7px 8px; font-weight:700; }
+  .beni td { border-bottom:1px solid #6573bf; padding:6px 8px; font-weight:700; }
+  .beni th:nth-child(2), .beni td:nth-child(2){ text-align:center; width:18%; }
+  .beni th:nth-child(3), .beni td:nth-child(3){ text-align:center; width:20%; }
   .section-title { background:#6573bf; color:white; padding:7px 8px; margin-top: 8px; font-weight:700; font-size: 11px; }
   .summary td { border-bottom: 1px solid #6573bf; padding: 5.2px 6px; vertical-align: top; font-size: 11px; }
   .summary td:first-child { font-weight: 700; width: 69%; }
@@ -2194,6 +2438,7 @@
 
     <table class="beni">
       <thead><tr><th>BENI</th><th>QUANTITA'</th><th>TIPOLOGIA</th></tr></thead>
+      ${ifisBeniRowHtml()}
     </table>
 
     <div class="section-title">Riepilogo condizioni economiche principali (Importi IVA esclusa)</div>
@@ -2290,6 +2535,7 @@
 
     <table class="ifis-beni">
       <thead><tr><th>BENI</th><th>QUANTITA'</th><th>TIPOLOGIA</th></tr></thead>
+      ${ifisBeniRowHtml()}
     </table>
 
     <div class="ifis-section-title">Riepilogo condizioni economiche principali (Importi IVA esclusa)</div>
@@ -2355,10 +2601,18 @@
   </section>`;
       }
       function printInternalIfis(){
+        if(ifisDirty){
+          alert('Hai modificato uno o più valori IFIS. Clicca CALCOLA IFIS prima di stampare il preventivo.');
+          return;
+        }
         const r = lastResult || calculate(true);
         if(!r || !r.asset){
           alert('Compila o importa il valore bene IFIS prima di stampare il preventivo IFIS.');
           return;
+        }
+        if(!selectedLedQuotes().length){
+          const proceed = confirm('Non hai selezionato nessun prodotto dalla schermata Ledwall, vuoi comunque stampare il preventivo?');
+          if(!proceed) return;
         }
         const printWindow = window.open('', '_blank', 'width=900,height=1100');
         if(!printWindow){
@@ -2372,16 +2626,16 @@
       }
       function setup(){
         attachButtons('DurationButtons', 'duration'); attachButtons('AdvanceButtons', 'advancePct'); attachButtons('ResidualButtons', 'residualPct'); attachButtons('PeriodicityButtons', 'periodicity'); attachButtons('IstruttoriaButtons', 'istruttoria');
-        ['AssetValue','SpreadInput'].forEach(id => { const el = ie(id); if(el) el.addEventListener('input', () => calculate(true)); });
-        const gest = ie('GestioneBeneSelect'); if(gest) gest.addEventListener('change', e => { ifisState.gestioneBene = n(e.target.value); calculate(true); });
+        ['AssetValue','SpreadInput'].forEach(id => { const el = ie(id); if(el) el.addEventListener('input', () => markIfisDirty(el)); });
+        const gest = ie('GestioneBeneSelect'); if(gest) gest.addEventListener('change', e => { ifisState.gestioneBene = n(e.target.value); markIfisDirty(gest); });
         const custom = ie('AdvanceCustomPct');
-        if(custom){ custom.addEventListener('input', () => { const raw = custom.value.trim(); if(raw === ''){ ifisState.advancePct = 0; setActive('AdvanceButtons',0); } else { ifisState.advancePct = Math.max(0, Math.min(90, n(raw))); setActive('AdvanceButtons', ifisState.advancePct); } calculate(true); }); }
-        if($('btnIfisCalc')) $('btnIfisCalc').addEventListener('click', () => calculate(false));
+        if(custom){ custom.addEventListener('input', () => { const raw = custom.value.trim(); if(raw === ''){ ifisState.advancePct = 0; setActive('AdvanceButtons',0); } else { ifisState.advancePct = Math.max(0, Math.min(90, n(raw))); setActive('AdvanceButtons', ifisState.advancePct); } markIfisDirty(custom); }); }
+        if($('btnIfisCalc')) $('btnIfisCalc').addEventListener('click', () => requestIfisCalculation(false));
         if($('btnIfisImportLed')) $('btnIfisImportLed').addEventListener('click', transferLedToIfis);
         if($('btnIfisPrintInternal')) $('btnIfisPrintInternal').addEventListener('click', printInternalIfis);
         calculate(true);
       }
-      return {setup, calculate, importAmount, currentCanone:() => lastResult ? lastResult.canone : null, getLastResult:() => lastResult, collectDraft, applyDraft, summaryHtml, monthlyLabel, buildIfisPrintPagesHtml};
+      return {setup, calculate, importAmount, currentCanone:() => (lastResult && !ifisDirty) ? lastResult.canone : null, getLastResult:() => (lastResult && !ifisDirty) ? lastResult : null, collectDraft, applyDraft, summaryHtml, monthlyLabel, buildIfisPrintPagesHtml};
     })();
     window.SEEMAX_IFIS = SEEMAX_IFIS;
 
@@ -2402,6 +2656,44 @@
     function line(label,value){ return `<div class="line"><span>${safe(label)}</span><strong>${safe(value || '—')}</strong></div>`; }
     function quoteToday(){ return new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'}); }
     function quoteCode(){ const d=new Date(); return 'SQP-' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') + '-' + String(d.getHours()).padStart(2,'0') + String(d.getMinutes()).padStart(2,'0'); }
+    function currentYearShort(){ return String(new Date().getFullYear()).slice(-2); }
+    function quoteNumberLabel(){
+      const raw = val('quoteNumber').trim();
+      if(!raw) return quoteCode();
+      return /-\d{2}$/.test(raw) ? raw : raw + '-' + currentYearShort();
+    }
+    function quoteDateFile(){
+      const d = new Date();
+      return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear();
+    }
+    function meterText(cm){ return (Number(cm || 0) / 100).toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function productPitchLabel(name){
+      const canonical = canonicalProductName(name || '');
+      const m = canonical.match(/P\s*([0-9]+(?:\.[0-9]+)?)/i);
+      return m ? 'P' + m[1] : canonical;
+    }
+    function ledFaceLabel(item){ return item && item.bifacciale ? 'Bifacciale' : 'Monofacciale'; }
+    function ledMeasureLabel(item){ return item ? meterText(item.displayWidth) + 'x' + meterText(item.displayHeight) : ''; }
+    function ledDisplayNameForDocs(item){
+      if(!item) return 'Ledwall Display';
+      return 'Ledwall Display ' + productPitchLabel(item.nome);
+    }
+    function ifisAssetName(){
+      const items = selectedLedQuotes();
+      const item = items && items.length ? items[0] : null;
+      if(!item) return 'LEDWALL DISPLAY';
+      return (ledDisplayNameForDocs(item) + ' - ' + ledMeasureLabel(item) + ' - ' + ledFaceLabel(item)).toUpperCase();
+    }
+    function suggestedPrintFileName(){
+      const items = selectedLedQuotes();
+      const item = items && items.length ? items[0] : null;
+      const client = val('clientCompany') || val('clientName') || 'Cliente';
+      const ledName = item ? ledDisplayNameForDocs(item) : 'Ledwall Display';
+      const measure = item ? ledMeasureLabel(item) : '';
+      const face = item ? ledFaceLabel(item) : '';
+      const parts = ['Prev. n. ' + quoteNumberLabel(), 'del ' + quoteDateFile(), client, ledName, measure, face].filter(Boolean);
+      return parts.join(' - ').replace(/[\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim();
+    }
     function printFinanceProvider(){
       const checked = document.querySelector('input[name="printFinanceProvider"]:checked');
       const provider = checked ? checked.value : (state.financeProvider || 'grenke');
@@ -2422,13 +2714,19 @@
     }
 
     function waitForQuoteImagesThenPrint(){
+      const previousTitle = document.title;
+      const printNow = () => {
+        document.title = suggestedPrintFileName();
+        window.print();
+        setTimeout(() => { document.title = previousTitle; }, 1200);
+      };
       const imgs = Array.from(document.querySelectorAll('#summaryPaper img'));
-      if(!imgs.length){ window.print(); return; }
+      if(!imgs.length){ printNow(); return; }
       let pending = imgs.filter(img => !img.complete).length;
-      if(!pending){ window.print(); return; }
-      const done = () => { pending--; if(pending <= 0) window.print(); };
+      if(!pending){ printNow(); return; }
+      const done = () => { pending--; if(pending <= 0) printNow(); };
       imgs.forEach(img => { if(!img.complete){ img.addEventListener('load', done, {once:true}); img.addEventListener('error', done, {once:true}); } });
-      setTimeout(() => window.print(), 1800);
+      setTimeout(() => printNow(), 1800);
     }
 
     function buildProductStrip(selectedItems){
@@ -2493,9 +2791,11 @@
           const b = sheet.rows[i+1];
           rows.push(`<tr><td><span>${safe(a[0])}</span><br>${safe(a[1])}</td>${b ? `<td><span>${safe(b[0])}</span><br>${safe(b[1])}</td>` : '<td></td>'}</tr>`);
         }
+        const resolutionText = (item.pixelBase && item.pixelHeight) ? `${item.pixelBase.toLocaleString('it-IT')} × ${item.pixelHeight.toLocaleString('it-IT')} px` : '—';
+        rows.unshift(`<tr><td><span>🧩 RISOLUZIONE PIXEL</span><br>${safe(resolutionText)}</td><td><span>📐 MISURA CONFIGURATA</span><br>${safe(ledMeasureLabel(item))} mt</td></tr>`);
         return `<section class="print-page technical-page">
           <div class="tech-title">Scheda tecnica ${safe(canonicalProductName(item.nome))}</div>
-          <p class="tech-description">${safe(sheet.description)}</p>
+          <p class="tech-description">${safe(sheet.description)} La risoluzione in pixel per la realizzazione dei media/grafiche è di <strong>${safe(resolutionText)}</strong>, in base alla misura configurata.</p>
           <div class="tech-image-box"><h3>Immagine prodotto</h3><div class="tech-image-inner"><img src="${productImageFor(item.nome)}" alt="${safe(item.nome)}" /></div></div>
           <table class="features-table"><tbody>${rows.join('')}</tbody></table>
         </section>`;
@@ -2530,7 +2830,7 @@
       const quoteValidityDays = 15;
       const clientName = val('clientCompany') || val('clientName') || 'Cliente';
       const quoteDate = quoteToday();
-      const code = quoteCode();
+      const code = quoteNumberLabel();
       const showFinancePage = provider !== 'none';
       const financeLabel = provider === 'ifis' ? 'IFIS Leasing' : 'Grenke Noleggio Operativo';
       const canone = currentCanone();
@@ -2566,8 +2866,8 @@
         <div class="quote-band"><img src="${BRAND_ASSETS.aifilLogo}" alt="AIFIL"><div class="brand-center"><img class="quote-logo-main" src="${BRAND_ASSETS.seemaxLogo}" alt="Seemax"><small>Display your vision</small></div><div style="text-align:center;font-weight:950">LED LAB<br/>COMPANY</div></div>
         <div class="quote-top-grid">
           <div>
-            <h2 class="quote-title">Preventivo Ledwall Seemax</h2>
-            <div class="quote-date">Documento ${safe(code)} · ${safe(quoteDate)}</div>
+            <h2 class="quote-title">PREVENTIVO ${safe(code)}</h2>
+            <div class="quote-date">Data: ${safe(quoteDate)}</div>
             <div class="quote-client"><h3>Spett.le</h3><strong>${safe(clientName)}</strong><br>${safe(val('clientVat')) ? 'P.IVA / C.F. ' + safe(val('clientVat')) + '<br>' : ''}${safe(val('clientCity'))}</div>
           </div>
           ${buildProductStrip(selectedItems)}
@@ -2665,10 +2965,10 @@
         meta:{client: val('clientCompany') || val('clientName') || 'Cliente non indicato', ledCount: selectedItems.length, ledAmount: Math.round(ledAmount || 0)},
         data:{
           view:state.view,
-          anagrafica:{agentName:val('agentName'), agentCompany:val('agentCompany'), agentEmail:val('agentEmail'), agentPhone:val('agentPhone'), clientCompany:val('clientCompany'), clientVat:val('clientVat'), clientName:val('clientName'), clientEmail:val('clientEmail'), clientPhone:val('clientPhone'), clientCity:val('clientCity'), projectNotes:val('projectNotes')},
+          anagrafica:{agentName:val('agentName'), agentCompany:val('agentCompany'), quoteNumber:val('quoteNumber'), agentEmail:val('agentEmail'), agentPhone:val('agentPhone'), clientCompany:val('clientCompany'), clientVat:val('clientVat'), clientName:val('clientName'), clientEmail:val('clientEmail'), clientPhone:val('clientPhone'), clientCity:val('clientCity'), projectNotes:val('projectNotes')},
           led:{activeLedQuoteIndex:state.activeLedQuoteIndex, quotes:state.ledQuotes.map(draftQuoteFromState), importedLedAmount:state.importedLedAmount},
           financeProvider:state.financeProvider,
-          grenke:{amount:$('grenkeAmount') ? $('grenkeAmount').value : '', mode:state.grenkeMode, duration:selectedDuration(), printDurations:getGrenkePrintDurations(), calculated:!!state.grenkeCalculated},
+          grenke:{amount:$('grenkeAmount') ? $('grenkeAmount').value : '', mode:state.grenkeMode, duration:selectedDuration(), printDurations:getGrenkePrintDurations(), calculated:!!state.grenkeCalculated, dirty:!!state.grenkeDirty},
           ifis:(window.SEEMAX_IFIS && window.SEEMAX_IFIS.collectDraft) ? window.SEEMAX_IFIS.collectDraft() : null,
           print:{showInstall:$('printShowInstall') ? $('printShowInstall').checked : true, showTransfer:$('printShowTransfer') ? $('printShowTransfer').checked : true, showCommission:$('printShowCommission') ? $('printShowCommission').checked : true}
         }
@@ -2719,6 +3019,7 @@
       document.querySelectorAll('input[name="grenkeDuration"]').forEach(r => { r.checked = r.value === duration; });
       setGrenkePrintDurations(g.printDurations || state.grenkePrintDurations || [36,48,60]);
       state.grenkeCalculated = !!g.calculated;
+      state.grenkeDirty = !!g.dirty && !state.grenkeCalculated;
       if(state.grenkeCalculated) calcGrenke(true); else updateGrenkePreview();
       if(window.SEEMAX_IFIS && window.SEEMAX_IFIS.applyDraft) window.SEEMAX_IFIS.applyDraft(data.ifis || null);
       state.financeProvider = data.financeProvider || state.financeProvider || 'grenke';
@@ -3077,10 +3378,69 @@
 
 
 
+    function patchNotesWasSeen(){
+      try{
+        return localStorage.getItem(PATCH_NOTES_STORAGE_KEY) === PATCH_NOTES.version;
+      }catch(err){
+        return false;
+      }
+    }
+
+    function markPatchNotesSeen(){
+      try{
+        localStorage.setItem(PATCH_NOTES_STORAGE_KEY, PATCH_NOTES.version);
+      }catch(err){}
+    }
+
+    function renderPatchNotes(){
+      const layer = $('patchNotesLayer');
+      if(!layer) return;
+      const versionLabel = $('patchNotesVersionLabel');
+      const title = $('patchNotesTitle');
+      const intro = $('patchNotesIntro');
+      const list = $('patchNotesList');
+      const foot = $('patchNotesFoot');
+      if(versionLabel) versionLabel.textContent = PATCH_NOTES.label || PATCH_NOTES.version;
+      if(title) title.textContent = PATCH_NOTES.title || 'Novità Seemax Quotation Planner';
+      if(intro) intro.textContent = PATCH_NOTES.intro || '';
+      if(list){
+        list.innerHTML = (PATCH_NOTES.items || []).map(item => `
+          <li class="patch-notes-item">
+            <div class="patch-notes-emoji" aria-hidden="true">${safe(item.emoji || '✨')}</div>
+            <div><strong>${safe(item.title || 'Aggiornamento')}</strong><span>${safe(item.text || '')}</span></div>
+          </li>`).join('');
+      }
+      if(foot) foot.textContent = PATCH_NOTES.footer || '';
+    }
+
+    function closePatchNotes(){
+      const layer = $('patchNotesLayer');
+      if(layer) layer.classList.add('hidden');
+      markPatchNotesSeen();
+    }
+
+    function showPatchNotes(force=false){
+      if(!force && patchNotesWasSeen()) return;
+      renderPatchNotes();
+      const layer = $('patchNotesLayer');
+      if(layer) layer.classList.remove('hidden');
+    }
+
+    function setupPatchNotes(){
+      const closeButtons = [$('btnPatchNotesClose'), $('btnPatchNotesOk'), ...document.querySelectorAll('[data-close-patch-notes]')].filter(Boolean);
+      closeButtons.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); closePatchNotes(); }));
+      document.addEventListener('keydown', (e) => {
+        const layer = $('patchNotesLayer');
+        if(e.key === 'Escape' && layer && !layer.classList.contains('hidden')) closePatchNotes();
+      });
+      setTimeout(() => showPatchNotes(false), 500);
+    }
+
     function boot(){
       initNavigation();
       setupTutorial();
       setupDrafts();
+      setupPatchNotes();
       setupDataInputs();
       setupLedwall();
       setupGrenke();
