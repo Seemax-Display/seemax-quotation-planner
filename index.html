@@ -215,13 +215,16 @@
     }
     .product-card:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(15,23,42,.10)}
     .product-card.selected{border-color:var(--brand-2);box-shadow:0 0 0 3px rgba(37,99,235,.14),0 16px 34px rgba(37,99,235,.13)}
+    .product-card.has-promo{border-color:#fb923c;box-shadow:0 10px 24px rgba(249,115,22,.10)}
+    .product-card.has-promo.selected{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.16),0 16px 34px rgba(249,115,22,.13)}
     .product-card.unified{border-color:#38bdf8;background:linear-gradient(180deg,#f0f9ff,#fff)}
     .product-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .product-badges{display:flex;align-items:flex-end;justify-content:flex-end;gap:6px;flex-wrap:wrap}
     .product-title{display:flex;align-items:center;gap:11px}
     .prod-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:var(--brand-soft);font-size:24px}
     .product-title h3{margin:0;font-size:18px;line-height:1.12;font-weight:950}
     .tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;background:var(--surface-3);color:var(--brand-3);font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.07em}
-    .tag.green{background:#dcfce7;color:#166534}.tag.yellow{background:#fef3c7;color:#92400e}.tag.red{background:#fee2e2;color:#991b1b}.tag.cyan{background:#cffafe;color:#155e75}
+    .tag.green{background:#dcfce7;color:#166534}.tag.yellow{background:#fef3c7;color:#92400e}.tag.red{background:#fee2e2;color:#991b1b}.tag.cyan{background:#cffafe;color:#155e75}.tag.promo{background:#ffedd5;color:#9a3412;box-shadow:0 0 0 1px rgba(251,146,60,.25)}
     .prod-desc{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0 12px 0}
     .prod-spec{font-size:12px;font-weight:950;color:var(--brand-3);background:#eff6ff;border:1px solid #bfdbfe;border-radius:999px;padding:7px 10px;display:inline-flex;margin-bottom:11px}
     .product-metrics{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
@@ -229,6 +232,10 @@
     .pm span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.10em;color:var(--muted);font-weight:950;margin-bottom:5px}
     .pm strong{display:block;font-size:15px;line-height:1.15}
     .pm.price strong{font-size:19px;color:var(--brand-2)}
+    .price-pair{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+    .price-pair del{font-size:13px;color:#94a3b8;font-weight:900;text-decoration-thickness:2px}
+    .pm .price-pair strong{color:#ea580c}
+    .pm.price .price-pair strong{font-size:19px;color:#ea580c}
     details.schema{border:1px solid var(--line);border-radius:13px;background:#fff;overflow:hidden;margin:11px 0}
     details.schema summary{cursor:pointer;padding:10px 11px;font-size:12px;font-weight:950;color:var(--brand-3);background:#f8fbff}
     .layout-box{padding:12px;overflow:auto;max-height:270px}
@@ -1050,13 +1057,16 @@
     // =============================
     // DATI LEDWALL ORIGINALI
     // =============================
+    // Promo prodotti:
+    // - prezzoPromoAgenti: inserisci un valore numerico per attivare il prezzo promo agenti; lascia null per prezzo normale.
+    // - prezzoPromoClienti: inserisci un valore numerico per attivare il prezzo promo clienti in versione amministrativa; lascia null per prezzo normale.
     const ledwalls = [
-      { nome:'P1.9', cabX:50, cabY:100, prezzoAgente:850, prezzoCliente:950, prezzoCina:560, infoAdmin:'Ledwall Display P1.9 | Misura Cabinet: 0.50x1.00 | Indoor | COSTO CINA: 560€ (incl. 30% spedizione)', infoAgenti:'Ledwall Display P1.9 | Misura Cabinet: 0.50x1.00 | Qualità Elevata da Medie e Lunghe Distanze. Ottimo a Distanze Ravvicinate. | Utilizzabile SOLO per Installazioni Indoor.', icon:'🖥️' },
-      { nome:'P2.5', cabX:64, cabY:64, prezzoAgente:700, prezzoCliente:890, prezzoCina:450, infoAdmin:'Ledwall Display P2.5 | 0.64x0.64 | In/Out | COSTO CINA: 450€ (incl. 30% spedizione)', infoAgenti:'Ledwall Display P2.5 | Misura Cabinet: 0.64x0.64 | Qualità Eccellente da Medie e Lunghe Distanze. Buono a Distanze Ravvicinate. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Vetrina o Stile TOTEM.', icon:'🖥️' },
-      { nome:'P3', cabX:57, cabY:57, prezzoAgente:410, prezzoCliente:550, prezzoCina:250, infoAdmin:'Ledwall Display P3 | 0.57x0.57 | In/Out | COSTO CINA: 250€', infoAgenti:'Ledwall Display P3 | Misura Cabinet: 0.57x0.57 | Qualità Eccellente da Medie e Lunghe Distanze. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' },
-      { nome:'P3.91', cabX:50, cabY:100, prezzoAgente:550, prezzoCliente:650, prezzoCina:280, infoAdmin:'Ledwall Display P3.91 | 0.50x1.00 | In/Out | COSTO CINA: 280€', infoAgenti:'Ledwall Display P3.91 | Misura Cabinet: 0.50x1.00 | Qualità Ottima da Medie e Lunghe Distanze. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' },
-      { nome:'P3.91 - 0.50x0.50', cabX:50, cabY:50, prezzoAgente:295, prezzoCliente:335, prezzoCina:150, infoAdmin:'Ledwall Display P3.91 | 0.50x0.50 | In/Out | COSTO CINA: 150€', infoAgenti:'Ledwall Display P3.91 | Misura Cabinet: 0.50x0.50 | Qualità Ottima da Medie e Lunghe Distanze. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' },
-      { nome:'P4', cabX:96, cabY:96, prezzoAgente:860, prezzoCliente:1080, prezzoCina:580, infoAdmin:'Ledwall Display P4 | 0.96x0.96 | Outdoor | COSTO CINA: 580€', infoAgenti:'Ledwall Display P4 | Misura Cabinet: 0.96x0.96 | Qualità Buona da Medie e Lunghe Distanze. | Utilizzabile prettamente per Installazioni Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' }
+      { nome:'P1.9', cabX:50, cabY:100, prezzoAgente:850, prezzoCliente:950, prezzoCina:560, prezzoPromoAgenti:null, prezzoPromoClienti:null, infoAdmin:'Ledwall Display P1.9 | Misura Cabinet: 0.50x1.00 | Indoor | COSTO CINA: 560€ (incl. 30% spedizione)', infoAgenti:'Ledwall Display P1.9 | Misura Cabinet: 0.50x1.00 | Qualità Elevata da Medie e Lunghe Distanze. Ottimo a Distanze Ravvicinate. | Utilizzabile SOLO per Installazioni Indoor.', icon:'🖥️' },
+      { nome:'P2.5', cabX:64, cabY:64, prezzoAgente:700, prezzoCliente:890, prezzoCina:450, prezzoPromoAgenti:null, prezzoPromoClienti:null, infoAdmin:'Ledwall Display P2.5 | 0.64x0.64 | In/Out | COSTO CINA: 450€ (incl. 30% spedizione)', infoAgenti:'Ledwall Display P2.5 | Misura Cabinet: 0.64x0.64 | Qualità Eccellente da Medie e Lunghe Distanze. Buono a Distanze Ravvicinate. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Vetrina o Stile TOTEM.', icon:'🖥️' },
+      { nome:'P3', cabX:57, cabY:57, prezzoAgente:410, prezzoCliente:550, prezzoCina:250, prezzoPromoAgenti:380, prezzoPromoClienti:500, infoAdmin:'Ledwall Display P3 | 0.57x0.57 | In/Out | COSTO CINA: 250€', infoAgenti:'Ledwall Display P3 | Misura Cabinet: 0.57x0.57 | Qualità Eccellente da Medie e Lunghe Distanze. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' },
+      { nome:'P3.91', cabX:50, cabY:100, prezzoAgente:550, prezzoCliente:650, prezzoCina:280, prezzoPromoAgenti:null, prezzoPromoClienti:null, infoAdmin:'Ledwall Display P3.91 | 0.50x1.00 | In/Out | COSTO CINA: 280€', infoAgenti:'Ledwall Display P3.91 | Misura Cabinet: 0.50x1.00 | Qualità Ottima da Medie e Lunghe Distanze. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' },
+      { nome:'P3.91 - 0.50x0.50', cabX:50, cabY:50, prezzoAgente:295, prezzoCliente:335, prezzoCina:150, prezzoPromoAgenti:null, prezzoPromoClienti:null, infoAdmin:'Ledwall Display P3.91 | 0.50x0.50 | In/Out | COSTO CINA: 150€', infoAgenti:'Ledwall Display P3.91 | Misura Cabinet: 0.50x0.50 | Qualità Ottima da Medie e Lunghe Distanze. | Utilizzabile per Installazioni Indoor e Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' },
+      { nome:'P4', cabX:96, cabY:96, prezzoAgente:860, prezzoCliente:1080, prezzoCina:580, prezzoPromoAgenti:null, prezzoPromoClienti:null, infoAdmin:'Ledwall Display P4 | 0.96x0.96 | Outdoor | COSTO CINA: 580€', infoAgenti:'Ledwall Display P4 | Misura Cabinet: 0.96x0.96 | Qualità Buona da Medie e Lunghe Distanze. | Utilizzabile prettamente per Installazioni Outdoor. | Adatto per Installazioni su Parete e a Bandiera.', icon:'🖥️' }
     ].map(model => ({...model, prezzo:model.prezzoAgente, info:admin ? model.infoAdmin : model.infoAgenti}));
 
     const PRODUCT_DESCRIPTIONS = {
@@ -1333,6 +1343,20 @@
     const num = (id) => Math.max(0, Number(($(id) && $(id).value) || 0));
     const val = (id) => (($(id) && $(id).value) || '').trim();
     const safe = (s) => String(s ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+    const promoValue = (value) => {
+      const n = Number(value);
+      return Number.isFinite(n) && n > 0 ? n : null;
+    };
+    const effectiveAgentUnitPrice = (model) => promoValue(model.prezzoPromoAgenti) ?? model.prezzoAgente;
+    const effectiveClientUnitPrice = (model) => promoValue(model.prezzoPromoClienti) ?? model.prezzoCliente;
+    const hasAgentPromo = (model) => promoValue(model.prezzoPromoAgenti) !== null;
+    const hasClientPromo = (model) => promoValue(model.prezzoPromoClienti) !== null;
+    const renderPriceValue = (current, original, promoActive) => {
+      const hasDiscount = promoActive && Number.isFinite(Number(current)) && Number.isFinite(Number(original)) && Math.round(Number(current)) !== Math.round(Number(original));
+      return hasDiscount
+        ? `<div class="price-pair"><del>${fmtEuro0(original)}</del><strong>${fmtEuro0(current)}</strong></div>`
+        : `<strong>${fmtEuro0(current)}</strong>`;
+    };
 
     // =============================
     // PATCH NOTES / NOVITA VERSIONE
@@ -1343,16 +1367,12 @@
     // 3) il browser salva la versione vista in localStorage, quindi la finestra appare una sola volta per dispositivo/browser.
     const PATCH_NOTES_STORAGE_KEY = 'SEEMAX_QUOTATION_PLANNER_PATCH_NOTES_VERSION';
     const PATCH_NOTES = {
-      version:'2026-07-01-patch-notes-01',
-      label:'Aggiornamento · Luglio 2026',
+      version:'2026-07-02-promo-ledwalls-01',
+      label:'Aggiornamento · Promo Ledwall',
       title:'Novità del Seemax Quotation Planner',
-      intro:'Abbiamo rifinito il Planner per renderlo ancora più chiaro, ordinato e professionale nella gestione delle tue attività.',
+      intro:'Abbiamo introdotto una gestione promozionale per evidenziare i prodotti in sconto direttamente nella schermata Ledwall.',
       items:[
-        {emoji:'🧾', title:'Nuovo Campo: N° Prev.', text:'Il campo Numero Preventivo ti permette di inserire un numero identificativo del preventivo che lo rende più facile da riconoscere.'},
-        {emoji:'💶', title:'Modifica al calcolatore Grenke', text:'I valori non vengono più calcolati in tempo reale. E\' necessario adesso calcolare manualmente premendo l\'apposito pulsante.'},
-        {emoji:'🏦', title:'Modifica al calcolatore IFIS', text:'E\' adesso mostrato nel file di stampa il tipo di bene selezionato dalla schermata Ledwall. I valori non vengono più calcolati in tempo reale. E\' necessario adesso calcolare manualmente premendo l\'apposito pulsante.'},
-        {emoji:'📱', title:'Esperienza mobile migliorata', text:'Tutte le schermate sono state rifinite per essere più leggibili anche da smartphone. La schermata di Grenke adesso consente di selezionare le rate applicabili sulla stampa in maniera più semplice'},
-        {emoji:'✨', title:'Patch Notes introdotte', text:'Da questa versione, le novità vengono mostrate direttamente sul Seemax Quotation Planner. Nell\'applicazione Seemax for You riceverai un semplice avviso qual\'ora gli strumenti legati al S.Q.P venisserò aggiornati.'}
+	    {emoji:'🏷️', title:'Prezzi promo sui Ledwall', text:'Adesso è possibile verificare le promo anche nel Calcolatore! Un ledwall in promo avrà il tag relativo IN SCONTO e il suo valore originale sarà barrato lasciando spazio al nuovo prezzo!'}
       ],
       footer:'Le Patch Notes sono locali: se cambi browser, dispositivo o cancelli i dati del sito, potrebbero essere mostrate nuovamente.'
     };
@@ -1703,10 +1723,18 @@
       const cols = chosen.cols;
       const rows = chosen.rows;
       let totalCab = cols * rows;
-      let prezzoClienteBase = totalCab * model.prezzoCliente;
-      let prezzoAgenteBase = totalCab * model.prezzoAgente;
+      const prezzoClienteUnitOriginal = model.prezzoCliente;
+      const prezzoAgenteUnitOriginal = model.prezzoAgente;
+      const prezzoClienteUnitEff = effectiveClientUnitPrice(model);
+      const prezzoAgenteUnitEff = effectiveAgentUnitPrice(model);
+      const promoClienteAttiva = hasClientPromo(model);
+      const promoAgenteAttiva = hasAgentPromo(model);
+      let prezzoClienteBaseOriginal = totalCab * prezzoClienteUnitOriginal;
+      let prezzoAgenteBaseOriginal = totalCab * prezzoAgenteUnitOriginal;
+      let prezzoClienteBase = totalCab * prezzoClienteUnitEff;
+      let prezzoAgenteBase = totalCab * prezzoAgenteUnitEff;
       let costoCinaBase = totalCab * model.prezzoCina;
-      if(bif){ totalCab *= 2; prezzoClienteBase *= 2; prezzoAgenteBase *= 2; costoCinaBase *= 2; }
+      if(bif){ totalCab *= 2; prezzoClienteBaseOriginal *= 2; prezzoAgenteBaseOriginal *= 2; prezzoClienteBase *= 2; prezzoAgenteBase *= 2; costoCinaBase *= 2; }
       const displayWidth = chosen.displayWidth;
       const displayHeight = chosen.displayHeight;
       const areaMq = (displayWidth/100) * (displayHeight/100);
@@ -1722,6 +1750,10 @@
         ...model, colsNeeded:cols, rowsNeeded:rows, totalCab, displayWidth, displayHeight, areaMq,
         prezzoClienteTotale:prezzoClienteBase + extraInstall + extraKm + provvigione,
         prezzoAgenteTotale:prezzoAgenteBase + extraInstall + extraKm + provvigione,
+        prezzoClienteTotaleOriginal:prezzoClienteBaseOriginal + extraInstall + extraKm + provvigione,
+        prezzoAgenteTotaleOriginal:prezzoAgenteBaseOriginal + extraInstall + extraKm + provvigione,
+        promoClienteAttiva, promoAgenteAttiva, promoAttiva:admin ? promoClienteAttiva : promoAgenteAttiva,
+        prezzoClienteUnitOriginal, prezzoAgenteUnitOriginal, prezzoClienteUnitEff, prezzoAgenteUnitEff,
         margineCliente:(prezzoClienteBase - costoCinaBase) + provvigione,
         margineAgente:(prezzoAgenteBase - costoCinaBase) + provvigione,
         margineInstallazione:extraInstall, installazioneBase:baseInstall, installMultiplier,
@@ -1743,12 +1775,16 @@
       const sqRowsU = 1;
       const rectCabBase = colsU * rectRowsU;
       const sqCabBase = colsU;
-      let displayCliente = (rectCabBase * rectModel.prezzoCliente) + (sqCabBase * sqModel.prezzoCliente);
-      let displayAgente = (rectCabBase * rectModel.prezzoAgente) + (sqCabBase * sqModel.prezzoAgente);
+      let displayClienteOriginal = (rectCabBase * rectModel.prezzoCliente) + (sqCabBase * sqModel.prezzoCliente);
+      let displayAgenteOriginal = (rectCabBase * rectModel.prezzoAgente) + (sqCabBase * sqModel.prezzoAgente);
+      let displayCliente = (rectCabBase * effectiveClientUnitPrice(rectModel)) + (sqCabBase * effectiveClientUnitPrice(sqModel));
+      let displayAgente = (rectCabBase * effectiveAgentUnitPrice(rectModel)) + (sqCabBase * effectiveAgentUnitPrice(sqModel));
       let displayCina = (rectCabBase * rectModel.prezzoCina) + (sqCabBase * sqModel.prezzoCina);
+      const promoClienteAttiva = hasClientPromo(rectModel) || hasClientPromo(sqModel);
+      const promoAgenteAttiva = hasAgentPromo(rectModel) || hasAgentPromo(sqModel);
       let rectCab = rectCabBase;
       let sqCab = sqCabBase;
-      if(bif){ displayCliente *= 2; displayAgente *= 2; displayCina *= 2; rectCab *= 2; sqCab *= 2; }
+      if(bif){ displayClienteOriginal *= 2; displayAgenteOriginal *= 2; displayCliente *= 2; displayAgente *= 2; displayCina *= 2; rectCab *= 2; sqCab *= 2; }
       const areaMq = (base/100) * (altezza/100);
       const baseInstall = installationBaseCost(areaMq, tipoInst, manualInstall);
       const extraInstall = Math.round(baseInstall * installMultiplier);
@@ -1759,6 +1795,9 @@
         displayWidth:base, displayHeight:altezza, areaMq,
         prezzoClienteTotale:displayCliente + extraInstall + extraKm + provvigione,
         prezzoAgenteTotale:displayAgente + extraInstall + extraKm + provvigione,
+        prezzoClienteTotaleOriginal:displayClienteOriginal + extraInstall + extraKm + provvigione,
+        prezzoAgenteTotaleOriginal:displayAgenteOriginal + extraInstall + extraKm + provvigione,
+        promoClienteAttiva, promoAgenteAttiva, promoAttiva:admin ? promoClienteAttiva : promoAgenteAttiva,
         margineCliente:(displayCliente - displayCina) + provvigione,
         margineAgente:(displayAgente - displayCina) + provvigione,
         margineInstallazione:extraInstall, installazioneBase:baseInstall, installMultiplier,
@@ -1821,19 +1860,22 @@
       const selected = state.selectedLedIndex === i;
       const status = r.unified ? ['Unificato','cyan'] : r.perfectMatch ? ['Misura perfetta','green'] : r.rotatedMatch ? ['Rotazione','yellow'] : ['Sconsigliato','red'];
       const price = admin ? r.prezzoClienteTotale : r.prezzoAgenteTotale;
+      const originalPrice = admin ? (r.prezzoClienteTotaleOriginal ?? r.prezzoClienteTotale) : (r.prezzoAgenteTotaleOriginal ?? r.prezzoAgenteTotale);
+      const promoVisible = admin ? !!(r.promoClienteAttiva || r.promoAgenteAttiva) : !!r.promoAgenteAttiva;
+      const mainPricePromo = admin ? !!r.promoClienteAttiva : !!r.promoAgenteAttiva;
       const detailsAdmin = admin ? `
-        <div class="pm"><span>Prezzo agente</span><strong>${fmtEuro0(r.prezzoAgenteTotale)}</strong></div>
+        <div class="pm"><span>Prezzo agente</span>${renderPriceValue(r.prezzoAgenteTotale, r.prezzoAgenteTotaleOriginal ?? r.prezzoAgenteTotale, !!r.promoAgenteAttiva)}</div>
         <div class="pm"><span>Margine agente</span><strong>${fmtEuro0(r.margineAgente)}</strong></div>
         <div class="pm"><span>Margine cliente</span><strong>${fmtEuro0(r.margineCliente)}</strong></div>
         <div class="pm"><span>Costo Cina</span><strong>${fmtEuro0(r.costoCinaBase)}</strong></div>` : '';
       const unifiedText = r.unified ? `<div class="notice success" style="margin:8px 0 11px">Cabinet 0.50x1.00: <strong>${r.rectCab}</strong> · Cabinet 0.50x0.50: <strong>${r.sqCab}</strong></div>` : '';
       const autonomaText = r.installAutonoma ? `<div class="autonoma-warning"><strong>Installazione autonoma:</strong> valore inserito manualmente. Base manuale ${fmtEuro0(r.installManualValue)} · valore applicato ${fmtEuro0(r.margineInstallazione)}.</div>` : '';
       return `
-        <article class="product-card ${selected ? 'selected' : ''} ${r.unified ? 'unified' : ''}">
+        <article class="product-card ${selected ? 'selected' : ''} ${r.unified ? 'unified' : ''} ${promoVisible ? 'has-promo' : ''}">
           <img class="product-thumb" src="${productImageFor(r.nome)}" alt="${safe(r.nome)}" />
           <div class="product-top">
             <div class="product-title"><div class="prod-icon">${r.icon}</div><div><span class="tag ${status[1]}">${status[0]}</span><h3>${safe(r.nome)}</h3></div></div>
-            ${r.isBestPrice ? '<span class="tag green">Best price</span>' : ''}
+            <div class="product-badges">${promoVisible ? '<span class="tag promo">🔥 IN SCONTO!</span>' : ''}${r.isBestPrice ? '<span class="tag green">Best price</span>' : ''}</div>
           </div>
           <div class="prod-spec">${r.unified ? 'Cabinet misti P3.91' : `Cabinet ${r.cabX} × ${r.cabY} cm`}${r.bifacciale ? ' · Bifacciale' : ''}</div>
           <p class="prod-desc">${safe(PRODUCT_DESCRIPTIONS[r.nome] || r.info || '')}</p>
@@ -1841,7 +1883,7 @@
           ${autonomaText}
           <div class="product-metrics">
             <div class="pm"><span>Numero cabinet</span><strong>${r.totalCab.toLocaleString('it-IT')}</strong></div>
-            <div class="pm price"><span>${APP_CONFIG.priceLabel}</span><strong>${fmtEuro0(price)}</strong></div>
+            <div class="pm price"><span>${APP_CONFIG.priceLabel}</span>${renderPriceValue(price, originalPrice, mainPricePromo)}</div>
             <div class="pm"><span>Misura realizzabile</span><strong>${r.displayWidth} × ${r.displayHeight} cm</strong></div>
             <div class="pm"><span>Resa in pixel</span><strong>${r.pixelBase.toLocaleString('it-IT')} × ${r.pixelHeight.toLocaleString('it-IT')}</strong></div>
             <div class="pm"><span>Installazione</span><strong>${fmtEuro0(r.margineInstallazione)}</strong><small>${r.installAutonoma ? 'Valore autonomo inserito manualmente · nessun impatto applicato' : `Base ${fmtEuro0(r.installazioneBase)} · impatto ${r.installImpactLabel}`}</small></div>
